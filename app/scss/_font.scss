@@ -1,0 +1,41 @@
+@font-face {
+    font-family: 'titilliumregular';
+    src: url("../fonts/titillium-regular-webfont.eot");
+    src: url("../fonts/titillium-regular-webfont.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/titillium-regular-webfont.woff2") format("woff2"),
+    url("../fonts/titillium-regular-webfont.woff") format("woff"),
+    url("../fonts/titillium-regular-webfont.ttf") format("truetype"),
+    url("../fonts/titillium-regular-webfont.svg#titilliumregular") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'titilliumblack';
+    src: url('../fonts/titillium-black-webfont.eot');
+    src: url('../fonts/titillium-black-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/titillium-black-webfont.woff2') format('woff2'),
+    url('../fonts/titillium-black-webfont.woff') format('woff'),
+    url('../fonts/titillium-black-webfont.ttf') format('truetype'),
+    url('../fonts/titillium-black-webfont.svg#titilliumblack') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'titilliumbold';
+    src: url('../fonts/titillium-semibold-webfont.eot');
+    src: url('../fonts/titillium-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/titillium-semibold-webfont.woff2') format('woff2'),
+    url('../fonts/titillium-semibold-webfont.woff') format('woff'),
+    url('../fonts/titillium-semibold-webfont.ttf') format('truetype'),
+    url('../fonts/titillium-semibold-webfont.svg#titilliumbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+$font: "titilliumregular", Arial, Helvetica, Verdana sans-serif;
+$font-bold: "titilliumbold", $font;
+$font-black: "titilliumblack", $font-bold;

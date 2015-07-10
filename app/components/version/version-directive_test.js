@@ -1,7 +1,7 @@
 'use strict';
 
-describe('myApp.version module', function() {
-  beforeEach(module('myApp.version'));
+describe('iahmDBApp.version module', function() {
+  beforeEach(module('iahmDBApp.version'));
 
   describe('app-version directive', function() {
     it('should print current version', function() {

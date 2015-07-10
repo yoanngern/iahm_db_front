@@ -1,0 +1,109 @@
+@mixin transform($scale, $rotate, $trans-x, $trans-y, $skew-x, $skew-y) {
+    -moz-transform: scale($scale) rotate($rotate) translate($trans-x, $trans-y) skew($skew-x, $skew-y);
+    -webkit-transform: scale($scale) rotate($rotate) translate($trans-x, $trans-y) skew($skew-x, $skew-y);
+    -o-transform: scale($scale) rotate($rotate) translate($trans-x, $trans-y) skew($skew-x, $skew-y);
+    -ms-transform: scale($scale) rotate($rotate) translate($trans-x, $trans-y) skew($skew-x, $skew-y);
+    transform: scale($scale) rotate($rotate) translate($trans-x, $trans-y) skew($skew-x, $skew-y);
+
+}
+
+@mixin gradient($color: #F5F5F5, $start: #EEE, $stop: #FFF) {
+    background: $color;
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(0, $start), color-stop(1, $stop));
+    background: -ms-linear-gradient(bottom, $start, $stop);
+    background: -moz-linear-gradient(center bottom, $start 0%, $stop 100%);
+    background: -o-linear-gradient($stop, $start);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='false', startColorstr=$start, endColorstr=$stop);
+
+}
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    -o-border-radius: $radius;
+    border-radius: $radius;
+}
+
+@mixin triangle($width: 50px, $height: 50px, $color: "red", $direction: "top") {
+
+    width: 0;
+    height: 0;
+    border-style: solid;
+
+    @if $direction == "top" {
+
+        @include triangleTop($width, $height, $color);
+
+    } @else if $direction == "top-right" {
+
+        @include triangleTopRight($width, $height, $color);
+
+    } @else if $direction == "right" {
+
+        @include triangleRight($width, $height, $color);
+
+    } @else if $direction == "bottom-right" {
+
+        @include triangleBottomRight($width, $height, $color);
+
+    } @else if $direction == "bottom" {
+
+        @include triangleBottom($width, $height, $color);
+
+    } @else if $direction == "bottom-left" {
+
+        @include triangleBottomLeft($width, $height, $color);
+
+    } @else if $direction == "left" {
+
+        @include triangleLeft($width, $height, $color);
+
+    } @else {
+
+        @include triangleTopLeft($width, $height, $color);
+
+    }
+}
+
+@mixin triangleTop($width: 50px, $height: 50px, $color: "red") {
+    border-width: 0 $width/2 $height $width/2;
+    border-color: transparent transparent $color transparent;
+}
+
+@mixin triangleTopRight($width: 50px, $height: 50px, $color: "red") {
+    border-width: 0 $width $height 0;
+    border-color: transparent $color transparent transparent;
+}
+
+@mixin triangleRight($width: 50px, $height: 50px, $color: "red") {
+    border-width: $height/2 0 $height/2 $width;
+    border-color: transparent transparent transparent $color;
+
+}
+
+@mixin triangleBottomRight($width: 50px, $height: 50px, $color: "red") {
+    border-width: 0 0 $height $width;
+    border-color: transparent transparent $color transparent;
+}
+
+@mixin triangleBottom($width: 50px, $height: 50px, $color: "red") {
+    border-width: $height $width/2 0 $width/2;
+    border-color: $color transparent transparent transparent;
+}
+
+@mixin triangleBottomLeft($width: 50px, $height: 50px, $color: "red") {
+    border-width: $height 0 0 $width;
+    border-color: transparent transparent transparent $color;
+}
+
+@mixin triangleLeft($width: 50px, $height: 50px, $color: "red") {
+    border-width: $height/2 $width $height/2 0;
+    border-color: transparent $color transparent transparent
+}
+
+@mixin triangleTopLeft($width: 50px, $height: 50px, $color: "red") {
+    border-width: $height $width 0 0;
+    border-color: $color transparent transparent transparent;
+}
+

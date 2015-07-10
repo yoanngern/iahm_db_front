@@ -12,3 +12,4 @@ angular.module('iahmDBApp.view2', ['ngRoute'])
 .controller('View2Ctrl', [function() {
 
 }]);
+

@@ -1,0 +1,23 @@
+<nav class="filter">
+    <ul>
+        <li ng-click="filterSearch('all')" ng-class="{selected: searchConstructor.entity == ''}"> All</li>
+        <li ng-click="filterSearch('contact')" ng-class="{selected: searchConstructor.entity == 'contact'}">Contacts
+        </li>
+        <li ng-click="filterSearch('entity')" ng-class="{selected: searchConstructor.entity == 'entity'}">Entities</li>
+        <li ng-click="filterSearch('group')" ng-class="{selected: searchConstructor.entity == 'group'}">Groups</li>
+        <li ng-click="filterSearch('event')" ng-class="{selected: searchConstructor.entity == 'event'}">Events</li>
+        <li ng-click="filterSearch('donation')" ng-class="{selected: searchConstructor.entity == 'donation'}">
+            Donations
+        </li>
+    </ul>
+</nav>
+
+<span class="nb_results">Number of results: {{results.num_results}}</span>
+
+<ul class="results">
+    <li ng-click="showView(doc.doc_type, doc.entity_id)" ng-repeat="doc in results.documents" class="{{doc.doc_type}}">
+        <h1>{{ doc.doc_title }}</h1>
+
+        <p>{{doc.doc_description}}</p>
+    </li>
+</ul>

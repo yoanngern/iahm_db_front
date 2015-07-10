@@ -1,0 +1,11 @@
+<h1>{{ doc.contact.firstname }} {{ doc.contact.lastname }}</h1>
+
+<form ng-submit="saveDoc()">
+
+    <input type="text" ng-model="doc.contact.firstname" autocomplete="off" autofocus />
+    <input type="text" ng-model="doc.contact.lastname" autocomplete="off" />
+    <input type="text" ng-model="doc.contact.title" autocomplete="off" />
+    <input type="text" ng-model="doc.contact.gender" autocomplete="off" />
+
+    <input type="submit" value="add">
+</form>

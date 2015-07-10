@@ -7,3 +7,5 @@ angular.module('iahmDBApp.version.interpolate-filter', [])
     return String(text).replace(/\%VERSION\%/mg, version);
   };
 }]);
+
+
