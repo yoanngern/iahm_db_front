@@ -34,7 +34,11 @@
         <form action="#">
             <input type="text" id="searchAll" ng-model="searchValue" ng-change="searchAll()" ng-model="search_value"
                    autocomplete="off" autofocus>
+
+
         </form>
+
+        <button ng-click="connect()">Connect</button>
 
         <div id="message" ng-show="message">{{ message }}</div>
     </header>
@@ -48,6 +52,7 @@
 -->
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
 <script src="build/iahmDBApp.min.js"></script>
 <script src="components/version/version.js"></script>
 <script src="components/version/version-directive.js"></script>

@@ -1,8 +1,9 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('iahmDBApp', [
+var iahmDBApp = angular.module('iahmDBApp', [
     'ngRoute',
+    'LocalStorageModule',
     'iahmDBApp.showView',
     'iahmDBApp.searchView'
 ]).
@@ -11,12 +12,24 @@ angular.module('iahmDBApp', [
     }])
 
     /*
-    .config(function ($locationProvider) {
-        $locationProvider.html5Mode(true).hashPrefix('!');
-    })
-    */
+     .config(function ($locationProvider) {
+     $locationProvider.html5Mode(true).hashPrefix('!');
+     })
+     */
 
-    .controller('appCtrl', ['$scope', '$location', function ($scope, $location) {
+    .controller('appCtrl', ['$scope', '$location', 'localStorageService', 'secure', function ($scope, $location, localStorageService, secure) {
+
+
+        $scope.connect = function () {
+            secure.connect();
+        };
+
+        secure.updateOauth();
+
+        $scope.getOauth = function () {
+            return secure.oauth
+        };
+
 
         $scope.message = "";
 

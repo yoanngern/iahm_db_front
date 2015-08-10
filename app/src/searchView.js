@@ -9,7 +9,7 @@ angular.module('iahmDBApp.searchView', ['ngRoute'])
         });
     }])
 
-    .controller('searchCtrl', ['$scope', '$http', '$routeParams', '$location', function ($scope, $http, $routeParams, $location) {
+    .controller('searchCtrl', ['$scope', '$http', '$routeParams', '$location', 'secure', function ($scope, $http, $routeParams, $location, secure) {
 
         $scope.results = [];
 
@@ -54,7 +54,8 @@ angular.module('iahmDBApp.searchView', ['ngRoute'])
                     'Content-Type': 'application/javascript'
                 },
                 params: {
-                    q: $scope.searchRequest
+                    q: $scope.searchRequest,
+                    access_token: secure.oauth.access_token,
                 }
             };
 

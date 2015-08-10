@@ -4,7 +4,7 @@
 
         console.log(document.URL);
 
-        var callbackResponse = (document.URL).split("#")[1];
+        var callbackResponse = (document.URL).split("?")[1];
         var responseParameters = (callbackResponse).split("&");
         var parameterMap = [];
         for(var i = 0; i < responseParameters.length; i++) {
@@ -14,13 +14,14 @@
             var iahm_api = {
                 oauth: {
                     access_token: parameterMap.access_token,
+                    refresh_token: parameterMap.refresh_token,
                     expires_in: parameterMap.expires_in,
-                    account_username: parameterMap.account_username,
-                    //code: parameterMap.code
+                    token_type: parameterMap.token_type,
+                    scope: parameterMap.scope
                 }
             };
             window.localStorage.setItem("iahm_api", JSON.stringify(iahm_api));
-            //window.location.href = "http://localhost:8000/app/";
+            window.location.href = "http://iahmdb-front.local";
         } else {
             alert("Problem authenticating");
         }
