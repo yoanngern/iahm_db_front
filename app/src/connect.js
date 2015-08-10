@@ -1,73 +1,77 @@
-'use strict';
+/*
 
-angular.module('iahmDBApp.searchView', ['ngRoute'])
+ 'use strict';
 
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/search2', {
-            templateUrl: 'searchView/search.html',
-            controller: 'searchCtrl'
-        });
-    }])
+ angular.module('iahmDBApp.searchView', ['ngRoute'])
 
-    .controller('searchCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+ .config(['$routeProvider', function ($routeProvider) {
+ $routeProvider.when('/search2', {
+ templateUrl: 'searchView/search.html',
+ controller: 'searchCtrl'
+ });
+ }])
 
-        $scope.results = [];
+ .controller('searchCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
 
-        $scope.searchRequest = "";
+ $scope.results = [];
 
-        $scope.filterSearch = function (param) {
-            console.log(param);
+ $scope.searchRequest = "";
 
-            $scope.searchConstructor.entity = param;
+ $scope.filterSearch = function (param) {
+ console.log(param);
 
-            if (param == "all") {
-                $scope.searchConstructor.entity = "";
-            }
+ $scope.searchConstructor.entity = param;
 
-            console.log($scope.searchConstructor);
+ if (param == "all") {
+ $scope.searchConstructor.entity = "";
+ }
 
-        };
+ console.log($scope.searchConstructor);
 
-        $scope.showView = function (doc_type, id) {
+ };
 
-            $scope.message = "loading...";
-            $location.path(doc_type + "/" + id);
+ $scope.showView = function (doc_type, id) {
 
-        };
+ $scope.message = "loading...";
+ $location.path(doc_type + "/" + id);
 
-        $scope.$watch('searchConstructor', function () {
+ };
+
+ $scope.$watch('searchConstructor', function () {
 
 
 
-            $scope.searchRequest = $scope.searchConstructor.q;
+ $scope.searchRequest = $scope.searchConstructor.q;
 
-            if ($scope.searchConstructor.entity) {
-                $scope.searchRequest += " AND doc_type:" + $scope.searchConstructor.entity;
-            }
+ if ($scope.searchConstructor.entity) {
+ $scope.searchRequest += " AND doc_type:" + $scope.searchConstructor.entity;
+ }
 
-        }, true);
+ }, true);
 
-        $scope.$watch('searchRequest', function () {
+ $scope.$watch('searchRequest', function () {
 
-            var req = {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/javascript'
-                },
-                params: {
-                    q: $scope.searchRequest
-                }
-            };
+ var req = {
+ method: 'GET',
+ headers: {
+ 'Content-Type': 'application/javascript'
+ },
+ params: {
+ q: $scope.searchRequest
+ }
+ };
 
-            $scope.message = "loading...";
-            $http.get('http://iahmdb.local/app_dev.php/api/search', req).success(function (data, status, headers, config) {
-                $scope.results = data;
-                $scope.message = "";
-            }).
-                error(function (data, status, headers, config) {
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
-                });
-        }, true);
+ $scope.message = "loading...";
+ $http.get('http://iahmdb.local/app_dev.php/api/search', req).success(function (data, status, headers, config) {
+ $scope.results = data;
+ $scope.message = "";
+ }).
+ error(function (data, status, headers, config) {
+ // called asynchronously if an error occurs
+ // or server returns response with an error status.
+ });
+ }, true);
 
-    }]);
+ }]);
+
+ */

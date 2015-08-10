@@ -4,12 +4,12 @@ angular.module('iahmDBApp.searchView', ['ngRoute'])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/search', {
-            templateUrl: 'searchView/search.html',
+            templateUrl: 'views/search.html',
             controller: 'searchCtrl'
         });
     }])
 
-    .controller('searchCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+    .controller('searchCtrl', ['$scope', '$http', '$routeParams', '$location', function ($scope, $http, $routeParams, $location) {
 
         $scope.results = [];
 
@@ -36,7 +36,6 @@ angular.module('iahmDBApp.searchView', ['ngRoute'])
         };
 
         $scope.$watch('searchConstructor', function () {
-
 
 
             $scope.searchRequest = $scope.searchConstructor.q;

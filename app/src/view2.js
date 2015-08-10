@@ -1,14 +1,18 @@
-'use strict';
+/*
 
-angular.module('iahmDBApp.view2', ['ngRoute'])
+ 'use strict';
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view2', {
-    templateUrl: 'view2/view2.html',
-    controller: 'View2Ctrl'
-  });
-}])
+ angular.module('iahmDBApp.view2', ['ngRoute'])
 
-.controller('View2Ctrl', [function() {
+ .config(['$routeProvider', function($routeProvider) {
+ $routeProvider.when('/view2', {
+ templateUrl: 'view2/view2.html',
+ controller: 'View2Ctrl'
+ });
+ }])
 
-}]);
+ .controller('View2Ctrl', [function() {
+
+ }]);
+
+ */

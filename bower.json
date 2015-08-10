@@ -1,15 +1,19 @@
 {
-  "name": "angular-seed",
-  "description": "A starter project for AngularJS",
-  "version": "0.0.0",
-  "homepage": "https://github.com/angular/angular-seed",
-  "license": "MIT",
-  "private": true,
-  "dependencies": {
-    "angular": "~1.4.0",
-    "angular-route": "~1.4.0",
-    "angular-loader": "~1.4.0",
-    "angular-mocks": "~1.4.0",
-    "html5-boilerplate": "~5.2.0"
-  }
+    "name": "iahmDBApp",
+    "description": "A starter project for AngularJS",
+    "version": "0.0.2",
+    "homepage": "https://github.com/yoanngern/iahm_db_front",
+    "license": "MIT",
+    "private": true,
+    "dependencies": {
+        "angular": "~1.4.3",
+        "angular-route": "~1.4.3",
+        "angular-loader": "~1.4.3",
+        "angular-mocks": "~1.4.3",
+        "html5-boilerplate": "~5.2.0",
+        "international-phone-number": "~0.0.8"
+    },
+    "resolutions": {
+        "angular": "1.4.3"
+    }
 }
