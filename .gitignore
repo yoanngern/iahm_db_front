@@ -8,3 +8,4 @@ tmp
 
 app/build/
 .sass-cache/
+app/css/
