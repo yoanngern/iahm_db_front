@@ -3,6 +3,7 @@
 // Declare app level module which depends on views, and components
 angular.module('iahmDBApp', [
     'ngRoute',
+    'oauth',
     'iahmDBApp.searchView',
     'iahmDBApp.showView',
     'iahmDBApp.editView',
@@ -11,7 +12,11 @@ angular.module('iahmDBApp', [
 ]).
     config(['$routeProvider', function ($routeProvider) {
         $routeProvider.otherwise({redirectTo: '/search'});
-    }]).controller('appCtrl', ['$scope', '$location', function ($scope, $location) {
+    }])
+    .config(function($locationProvider) {
+        $locationProvider.html5Mode(true).hashPrefix('!');
+    })
+    .controller('appCtrl', ['$scope', '$location', function ($scope, $location) {
 
         $scope.message = "";
 
