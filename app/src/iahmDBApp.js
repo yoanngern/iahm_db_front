@@ -30,6 +30,17 @@ var iahmDBApp = angular.module('iahmDBApp', [
             return secure.oauth
         };
 
+        $scope.updateAccess = function() {
+            secure.updateAccess();
+        };
+
+        $scope.resetOauth = function () {
+            secure.resetOauth();
+        };
+
+        $scope.badAccessToken = function () {
+          secure.badAccessToken();
+        };
 
         $scope.message = "";
 

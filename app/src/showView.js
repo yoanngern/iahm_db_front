@@ -9,37 +9,41 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
         });
     }])
 
-    .controller('showCtrl', ['$scope', '$http', '$routeParams', '$location', function ($scope, $http, $routeParams, $location) {
+    .controller('showCtrl', ['$scope', '$http', '$routeParams', '$location', 'rest', function ($scope, $http, $routeParams, $location, rest) {
 
+
+        $scope.doc_type = $routeParams.doc_type;
+        var api_path = "";
+
+        if (typeof($routeParams.doc_type) === 'undefined' || typeof($routeParams.id) === 'undefined') {
+            $location.path('/search');
+        }
+
+        $scope.doc = {
+            id: $routeParams.id
+        };
+
+
+        if ($scope.doc_type == "contact") {
+            rest.Contact.getContact($scope.doc.id);
+        }
+        if ($scope.doc_type == "event") {
+            api_path = "events";
+        }
+
+
+        var req = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        $scope.$on('ContactReceived', function(event, data) {
+            $scope.doc = data;
+        });
 
         /*
-         $scope.doc_type = $routeParams.doc_type;
-         var api_path = "";
-
-         if (typeof($routeParams.doc_type) === 'undefined' || typeof($routeParams.id) === 'undefined') {
-         $location.path('/search');
-         }
-
-
-
-         if ($scope.doc_type == "contact") {
-         api_path = "contacts";
-         }
-         if ($scope.doc_type == "event") {
-         api_path = "events";
-         }
-
-         $scope.doc = {
-         id: $routeParams.id
-         };
-
-         var req = {
-         method: 'GET',
-         headers: {
-         'Content-Type': 'application/json'
-         }
-         };
-
          $http.get('http://iahmdb.local/app_dev.php/api/' + api_path + '/' + $scope.doc.id, req).success(function (data, status, headers, config) {
          $scope.doc = data;
          $scope.message = "";
@@ -49,4 +53,5 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
          // or server returns response with an error status.
          });
          */
+
     }]);
