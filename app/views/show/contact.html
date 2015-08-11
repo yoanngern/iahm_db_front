@@ -1,6 +1,388 @@
-<h1>Hello!</h1>
+<nav class="left-nav">
+    <ul>
+        <li ng-repeat="tab in tabs"
+            ng-class="{active:isActiveTab(tab.url)}"
+            ng-click="onClickTab(tab)">
+            <span class="label">{{tab.title}}</span>
+            <span class="nb"></span>
+        </li>
+    </ul>
+</nav>
 
-<h1>{{doc.firstname}} {{doc.lastname}}</h1>
+<section id="docMain">
 
-<p ng-repeat="email in doc.emails">E-mail: {{email.value}} ({{email.type}})</p>
-<p ng-repeat="phone in doc.phones">E-mail: {{phone.number}} ({{phone.type}})</p>
+    <header ng-show="!editTitle" class="doc-show">
+        <ul class="action">
+            <li ng-click="editItem('editTitle')">Modifier</li>
+        </ul>
+
+        <h1><span>{{contact.firstname}}</span> {{contact.lastname}}</h1>
+    </header>
+
+    <article ng-show="editTitle" class="doc-edit">
+        <header>
+            <h2>Nom du contact</h2>
+            <ul class="action">
+                <li ng-click="saveItem('contact', 'editTitle')">Sauvegarder</li>
+                <li ng-click="cancelItem('contact', 'editTitle')">Annuler</li>
+            </ul>
+        </header>
+        <section>
+            <div class="key"><h3>Prénom</h3></div>
+            <div class="values">
+                <input type="text" ng-model="contact.firstname" autocomplete="off"/>
+            </div>
+        </section>
+        <section>
+            <div class="key"><h3>Nom</h3></div>
+            <div class="values">
+                <input type="text" ng-model="contact.lastname" autocomplete="off"/>
+            </div>
+        </section>
+    </article>
+
+    <div ng-include="currentTab"></div>
+</section>
+
+
+<script type="text/ng-template" id="infos.tpl.html">
+
+    <article ng-show="!editInfos" class="doc-show">
+        <header>
+            <h2>Informations générales</h2>
+            <ul class="action">
+                <li ng-click="editItem('editInfos')">Modifier</li>
+            </ul>
+        </header>
+        <section>
+            <div class="key"><h3>Sexe</h3></div>
+            <div class="values">
+                <div class="value">
+                    <span ng-if="contact.gender=='man'">Homme</span>
+                    <span ng-if="contact.gender=='woman'">Femme</span>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="key"><h3>Date de naissance</h3></div>
+            <div class="values">
+                <div class="value">{{contact.date_of_birth | date:'dd MMMM yyyy'}} ({{
+                    calculateAge(contact.date_of_birth)}}
+                    ans)
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="key"><h3>Titre</h3></div>
+            <div class="values">
+                <div class="value">{{contact.title}}</div>
+            </div>
+        </section>
+        <section>
+            <div class="key"><h3>Langues</h3></div>
+            <div class="values">
+                <div class="value">
+
+                    <span ng-repeat="language in contact.languages">{{language.name}}</span>
+
+                </div>
+            </div>
+        </section>
+    </article>
+
+    <article ng-show="editInfos" class="doc-edit">
+        <header>
+            <h2>Informations générales</h2>
+            <ul class="action">
+                <li ng-click="saveItem('contact', 'editInfos')">Sauvegarder</li>
+                <li ng-click="cancelItem('contact', 'editInfos')">Annuler</li>
+            </ul>
+        </header>
+        <section>
+            <div class="key"><h3>Sexe</h3></div>
+            <div class="values">
+                <select ng-model="contact.gender">
+                    <option value="man">Homme</option>
+                    <option value="woman">Femme</option>
+                </select>
+            </div>
+        </section>
+        <section>
+            <div class="key"><h3>Date de naissance</h3></div>
+            <div class="values">
+                <input type="date" ui-date="dateOptions" ng-model="contact.date_of_birth" placeholder="yyyy-MM-dd"
+                       autocomplete="off"/>
+            </div>
+        </section>
+        <section>
+            <div class="key"><h3>Titre</h3></div>
+            <div class="values">
+                <input type="text" ng-model="contact.title" autocomplete="off"/>
+            </div>
+        </section>
+        <section>
+            <div class="key"><h3>Langues</h3></div>
+            <div class="values">
+
+                <div class="tags" data-type="language">
+                    <div class="results">
+                        <span ng-click="removeToResults('language', language)"
+                              ng-repeat="language in contact.languages">{{language.name}}</span>
+
+                        <input type="text" ng-model="searchLanguage"/>
+
+                    </div>
+                    <ul class="found">
+                        <li ng-click="addToResults('language', language)"
+                            ng-repeat="language in code_langues | searchFor:searchLanguage">
+                            <span>{{language.fr_name}}</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+
+    </article>
+
+    <article ng-show="!editCoord" class="doc-show">
+        <header>
+            <h2>Coordonnées</h2>
+            <ul class="action">
+                <li ng-click="editItem('editCoord')">Modifier</li>
+            </ul>
+        </header>
+        <section>
+            <div class="key"><h3>Téléphones</h3></div>
+            <div class="values">
+                <div class="value" ng-repeat="phone in contact.phones">
+                    <span>{{phone.number | tel}}</span>
+                    <span>({{phone.type}})</span>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="key"><h3>E-mail</h3></div>
+            <div class="values">
+                <div class="value" ng-repeat="email in contact.emails">
+                    <span>{{email.value}}</span>
+                    <span>({{email.type}})</span>
+                </div>
+            </div>
+        </section>
+    </article>
+
+    <article ng-show="editCoord" class="doc-edit">
+        <header>
+            <h2>Coordonnées</h2>
+            <ul class="action">
+                <li ng-click="saveItem('contact', 'editCoord')">Sauvegarder</li>
+                <li ng-click="cancelItem('contact', 'editCoord')">Annuler</li>
+            </ul>
+        </header>
+        <section>
+            <div class="key"><h3>Téléphones</h3></div>
+            <div class="values">
+                <div class="value" ng-repeat="phone in contact.phones">
+                    <input type="text" international-phone-number default-country="ch"
+                           preferred-countries="ch, fr, de, it, at, be, nl, us"
+                           ng-model="phone.number" autocomplete="off"/>
+
+                    <select ng-model="phone.type">
+                        <option value="mobile">Mobile</option>
+                        <option value="pro">Professionnel</option>
+                        <option value="perso">Personnel</option>
+                        <option value="Principal">Principal</option>
+                        <option value="Fax (professionnel)">Fax (professionnel)</option>
+                        <option value="Fax (personnel)">Fax (personnel)</option>
+                        <option value="other">Autre</option>
+                    </select>
+                </div>
+                <button ng-click="addEditItem(contact.phones)">Ajouter un autre téléphone</button>
+            </div>
+        </section>
+        <section>
+            <div class="key"><h3>E-mail</h3></div>
+            <div class="values">
+                <div class="value" ng-repeat="email in contact.emails">
+                    <input type="text" ng-model="email.value" autocomplete="off"/>
+
+                    <select ng-model="email.type">
+                        <option value="perso">Personnel</option>
+                        <option value="pro">Professionnel</option>
+                        <option value="other">Autre</option>
+                    </select>
+                </div>
+                <button ng-click="addEditItem(contact.emails)">Ajouter une autre adresse e-mail</button>
+            </div>
+        </section>
+    </article>
+
+    <article ng-show="!editComm" class="doc-show">
+        <header>
+            <h2>Commentaires</h2>
+            <ul class="action">
+                <li ng-click="editItem('editComm')">Modifier</li>
+            </ul>
+        </header>
+        <section class="block-value">
+            {{contact.comment}}
+        </section>
+    </article>
+
+    <article ng-show="editComm" class="doc-edit">
+        <header>
+            <h2>Commentaires</h2>
+            <ul class="action">
+                <li ng-click="saveItem('contact', 'editComm')">Sauvegarder</li>
+                <li ng-click="cancelItem('contact', 'editComm')">Annuler</li>
+            </ul>
+        </header>
+        <section class="block-value">
+            <textarea ng-model="contact.comment" rows="6"></textarea>
+        </section>
+    </article>
+
+</script>
+
+<script type="text/ng-template" id="events.tpl.html">
+
+    <article class="doc-show">
+        <header>
+            <h2>Events</h2>
+            <ul class="action">
+            </ul>
+        </header>
+        <table>
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th colspan="2">Dates</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="event in events">
+                <td><a href="#/doc/event/{{event.id}}">{{event.title}}</a></td>
+                <td>{{event.start | date:'dd MMMM yyyy'}}</td>
+                <td>{{event.end | date:'dd MMMM yyyy'}}</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </article>
+</script>
+
+<script type="text/ng-template" id="groups.tpl.html">
+
+    <article class="doc-show">
+        <header>
+            <h2>Groupes</h2>
+            <ul class="action">
+            </ul>
+        </header>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Role</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="group in groups">
+                <td>{{group.title}}</td>
+                <td>{{group.role}}</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </article>
+
+</script>
+
+<script type="text/ng-template" id="locations.tpl.html">
+
+    <article ng-repeat="personType in contact.entities" class="doc-show">
+        <header>
+            <h2>{{personType.entity.name}}</h2>
+            <ul class="action">
+            </ul>
+        </header>
+        <section ng-repeat="location in personType.entity.locations">
+            <div class="key"><h3>{{location.type}}</h3></div>
+            <div class="values">
+                <div class="value">{{location.address}}</div>
+                <div class="value">{{location.postbox}}</div>
+                <div class="value">{{location.district}}</div>
+                <div class="value">{{location.department}}</div>
+                <div class="value">{{location.postal_code}} {{location.city}}</div>
+                <div class="value">{{location.country}}</div>
+            </div>
+        </section>
+    </article>
+
+</script>
+
+<script type="text/ng-template" id="donations.tpl.html">
+
+    <article class="doc-show">
+        <header>
+            <h2>Dons</h2>
+            <ul class="action">
+            </ul>
+        </header>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Montant</th>
+                <th>Monnaie</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="donation in donations">
+                <td>{{donation.amount}}</td>
+                <td>{{donation.currency}}</td>
+                <td>{{donation.type}}</td>
+                <td>{{donation.date | date:'dd MMMM yyyy'}}</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </article>
+
+</script>
+
+<script type="text/ng-template" id="entities.tpl.html">
+    <article class="doc-show">
+        <header>
+            <h2>Entités (familles, entreprises, associations, ...)</h2>
+            <ul class="action">
+            </ul>
+        </header>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Type</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="personType in contact.entities">
+                <td>{{personType.entity.name}}</td>
+                <td>{{personType.type}}</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </article>
+</script>

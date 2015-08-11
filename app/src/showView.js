@@ -11,47 +11,107 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
 
     .controller('showCtrl', ['$scope', '$http', '$routeParams', '$location', 'rest', function ($scope, $http, $routeParams, $location, rest) {
 
+        if (typeof($routeParams.doc_type) === 'undefined' ||
+            typeof($routeParams.id) === 'undefined') {
 
-        $scope.doc_type = $routeParams.doc_type;
-        var api_path = "";
-
-        if (typeof($routeParams.doc_type) === 'undefined' || typeof($routeParams.id) === 'undefined') {
             $location.path('/search');
+
+        } else {
+            $scope.doc_type = $routeParams.doc_type;
+            $scope.doc_id = $routeParams.id;
         }
 
-        $scope.doc = {
-            id: $routeParams.id
-        };
+        $scope.doc = {};
 
+        $scope.getDoc = function (type, id) {
+            switch (type) {
+                case "contact":
 
-        if ($scope.doc_type == "contact") {
-            rest.Contact.getContact($scope.doc.id);
-        }
-        if ($scope.doc_type == "event") {
-            api_path = "events";
-        }
+                    rest.Contact.getContact(id);
 
+                    break;
 
-        var req = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
+                case "entity":
+
+                    rest.Entity.getEntity(id);
+
+                    break;
+
+                case "donation":
+
+                    rest.Donation.getDonation(id);
+
+                    break;
+
+                case "group":
+
+                    rest.Group.getGroup(id);
+
+                    break;
+
+                case "event":
+
+                    rest.Event.getEvent(id);
+
+                    break;
             }
         };
 
-        $scope.$on('ContactReceived', function(event, data) {
+        $scope.getDoc($scope.doc_type, $scope.doc_id);
+
+        $scope.$on('ContactReceived', function (event, data) {
             $scope.doc = data;
+            $scope.contact = $scope.doc;
         });
 
-        /*
-         $http.get('http://iahmdb.local/app_dev.php/api/' + api_path + '/' + $scope.doc.id, req).success(function (data, status, headers, config) {
-         $scope.doc = data;
-         $scope.message = "";
-         }).
-         error(function (data, status, headers, config) {
-         // called asynchronously if an error occurs
-         // or server returns response with an error status.
-         });
-         */
+        $scope.$on('EntityReceived', function (event, data) {
+            $scope.doc = data;
+            $scope.entity = $scope.doc;
+        });
 
-    }]);
+    }])
+
+    .filter('tel', function () {
+        return function (tel) {
+            if (!tel) { return ''; }
+
+            var value = tel.toString().trim().replace(/^\+/, '');
+
+            if (value.match(/[^0-9]/)) {
+                return tel;
+            }
+
+            var country, city, number;
+
+            switch (value.length) {
+                case 10: // +1PPP####### -> C (PPP) ###-####
+                    country = 1;
+                    city = value.slice(0, 3);
+                    number = value.slice(3);
+                    break;
+
+                case 11: // +CPPP####### -> CCC (PP) ###-####
+                    country = value[0];
+                    city = value.slice(1, 4);
+                    number = value.slice(4);
+                    break;
+
+                case 12: // +CCCPP####### -> CCC (PP) ###-####
+                    country = value.slice(0, 3);
+                    city = value.slice(3, 5);
+                    number = value.slice(5);
+                    break;
+
+                default:
+                    return tel;
+            }
+
+            if (country == 1) {
+                country = "";
+            }
+
+            number = number.slice(0, 3) + '-' + number.slice(3);
+
+            return (country + " (" + city + ") " + number).trim();
+        };
+    });

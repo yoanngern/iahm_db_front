@@ -10,6 +10,8 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
     rest.Location = {};
     rest.Event = {};
 
+    rest.Search = {};
+
 
     rest.Contact.getContacts = function () {
         rest.getRest('contacts/', "ContactsReceived");
@@ -61,6 +63,14 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
 
     rest.Location.getLocation = function (location_id) {
         rest.getRest('locations/' + location_id, "LocationReceived");
+    };
+
+    rest.Donation.getDonations = function () {
+        rest.getRest('donations/', "DonationsReceived");
+    };
+
+    rest.Donation.getDonation = function (donation_id) {
+        rest.getRest('donations/' + donation_id, "DonationReceived");
     };
 
     rest.Group.getGroup = function (group_id) {
@@ -154,29 +164,37 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
     };
 
 
+    rest.Search.search = function (query) {
+
+        rest.getRest('search?' + query, "SearchFound");
+    };
+
+
     rest.getRest = function (rest_path, event) {
 
         var req = {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
+            },
+            params: {
+                access_token: secure.oauth.access_token
             }
         };
 
-        $http.get('http://iahmdb.local/app_dev.php/api/' + rest_path + "?access_token=" +
-            secure.oauth.access_token, req)
+        $http.get('http://iahmdb.local/app_dev.php/api/' + rest_path, req)
             .success(function (data, status, headers, config) {
+
+                secure.isConnected = true;
 
                 $rootScope.$broadcast(event, data);
 
             }).
             error(function (data, status, headers, config) {
 
-                console.log(data);
+                if (data.error == "invalid_grant" || status == 401) {
 
-                if (data.error == "invalid_grant") {
-
-                    if(secure.updateAccess()) {
+                    if (secure.updateAccess()) {
                         rest.getRest(rest_path, event);
                     }
 
@@ -201,6 +219,8 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
             secure.oauth.access_token, JSON.stringify(data), config)
             .success(function (data, status, headers, config) {
 
+                secure.isConnected = true;
+
                 //$location.path('/doc/' + rest.doc_type + '/' + rest.doc.id);
 
                 $rootScope.$broadcast(event, data);
@@ -211,7 +231,7 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
                 return false;
             });
 
-    }
+    };
 
 
     return rest;

@@ -1,6 +1,2 @@
-<a href="#/search">Back</a>
-
-<div ng-if="doc_type == 'event'" ng-include="'views/show/event.html'"></div>
-<div ng-if="doc_type == 'contact'" ng-include="'views/show/contact.html'"></div>
-
-<a href="#/doc/{{doc_type}}/{{doc.id}}/edit">Edit</a>
+<div ng-if="doc_type == 'event'" ng-controller="navCtrl" ng-include="'views/show/event.html'"></div>
+<div ng-if="doc_type == 'contact'" ng-controller="navCtrl" ng-include="'views/show/contact.html'"></div>

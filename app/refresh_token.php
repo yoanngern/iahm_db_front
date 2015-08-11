@@ -12,7 +12,40 @@ $url = "http://iahmdb.local/app_dev.php/oauth/v2/token?client_id=" . $client_id
 
 //var_dump($url);
 
+function parseHeaders( $headers )
+{
+    $head = array();
+    foreach( $headers as $k=>$v )
+    {
+        $t = explode( ':', $v, 2 );
+        if( isset( $t[1] ) )
+            $head[ trim($t[0]) ] = trim( $t[1] );
+        else
+        {
+            $head[] = $v;
+            if( preg_match( "#HTTP/[0-9\.]+\s+([0-9]+)#",$v, $out ) )
+                $head['reponse_code'] = intval($out[1]);
+        }
+    }
+    return $head;
+}
+
 $json = file_get_contents($url);
+
+if(parseHeaders($http_response_header)['reponse_code'] == 400) {
+
+	$arr = array();
+	$arr['error'] = 400;
+
+	//var_dump($arr);
+
+	$json = json_encode($arr);
+}
+
 $data = json_decode($json, TRUE);
 
+//var_dump($json);
+
+header(parseHeaders($http_response_header)[0]);
+header('Content-Type: application/json');
 echo $json;

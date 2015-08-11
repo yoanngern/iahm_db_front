@@ -5,6 +5,7 @@ var iahmDBApp = angular.module('iahmDBApp', [
     'ngRoute',
     'LocalStorageModule',
     'iahmDBApp.showView',
+    'iahmDBApp.navigation',
     'iahmDBApp.searchView'
 ]).
     config(['$routeProvider', function ($routeProvider) {
@@ -19,6 +20,9 @@ var iahmDBApp = angular.module('iahmDBApp', [
 
     .controller('appCtrl', ['$scope', '$location', 'localStorageService', 'secure', function ($scope, $location, localStorageService, secure) {
 
+        $scope.isConnected = function () {
+            return secure.isConnected;
+        };
 
         $scope.connect = function () {
             secure.connect();
@@ -30,7 +34,7 @@ var iahmDBApp = angular.module('iahmDBApp', [
             return secure.oauth
         };
 
-        $scope.updateAccess = function() {
+        $scope.updateAccess = function () {
             secure.updateAccess();
         };
 
@@ -39,7 +43,7 @@ var iahmDBApp = angular.module('iahmDBApp', [
         };
 
         $scope.badAccessToken = function () {
-          secure.badAccessToken();
+            secure.badAccessToken();
         };
 
         $scope.message = "";

@@ -9,7 +9,7 @@ angular.module('iahmDBApp.searchView', ['ngRoute'])
         });
     }])
 
-    .controller('searchCtrl', ['$scope', '$http', '$routeParams', '$location', 'secure', function ($scope, $http, $routeParams, $location, secure) {
+    .controller('searchCtrl', ['$scope', '$http', '$routeParams', '$location', 'secure', 'rest', function ($scope, $http, $routeParams, $location, secure, rest) {
 
         $scope.results = [];
 
@@ -46,28 +46,16 @@ angular.module('iahmDBApp.searchView', ['ngRoute'])
 
         }, true);
 
+        $scope.$on('SearchFound', function(event, data) {
+            $scope.results = data;
+        });
+
         $scope.$watch('searchRequest', function () {
 
-            var req = {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/javascript'
-                },
-                params: {
-                    q: $scope.searchRequest,
-                    access_token: secure.oauth.access_token,
-                }
-            };
+            var query = "q=" + $scope.searchRequest;
 
-            $scope.message = "loading...";
-            $http.get('http://iahmdb.local/app_dev.php/api/search', req).success(function (data, status, headers, config) {
-                $scope.results = data;
-                $scope.message = "";
-            }).
-                error(function (data, status, headers, config) {
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
-                });
+            rest.Search.search(query);
+
         }, true);
 
     }]);

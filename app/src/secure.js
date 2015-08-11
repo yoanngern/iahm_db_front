@@ -15,6 +15,8 @@ iahmDBApp.factory('secure', ['$http', '$rootScope', function ($http, $rootScope)
         scope: null
     };
 
+    secure.isConnected = false;
+
     secure.resetOauth = function () {
         window.localStorage.setItem("iahm_api", null);
 
@@ -86,7 +88,7 @@ iahmDBApp.factory('secure', ['$http', '$rootScope', function ($http, $rootScope)
 
                 console.log("error");
 
-                return false;
+                secure.connect();
 
             });
 
