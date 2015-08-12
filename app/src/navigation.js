@@ -8,13 +8,13 @@ angular.module('iahmDBApp.navigation', [])
             case "contact":
 
                 $scope.tabs = [{
-                    title: 'Infos',
+                    title: 'Informations générales',
                     url: 'infos.tpl.html'
                 }, {
-                    title: 'Events',
+                    title: 'Evénements',
                     url: 'events.tpl.html'
                 }, {
-                    title: 'Groups',
+                    title: 'Groupes',
                     url: 'groups.tpl.html'
                 }, {
                     title: 'Adresses',
