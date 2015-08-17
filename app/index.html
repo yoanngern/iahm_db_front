@@ -38,6 +38,8 @@
 
         </form>
 
+        <button ng-click="addView()">Ajouter ...</button>
+
         <!--
         <button ng-click="connect()">Connect</button>
         <button ng-click="updateAccess()">updateAccess</button>
@@ -50,6 +52,8 @@
 
         <div id="message" ng-show="message">{{ message }}</div>
     </header>
+
+    <div id="addView" ng-if="addViewStatus" ng-controller="addCtrl" ng-include="'views/add.html'"></div>
 
     <section id="body" class="" ng-view></section>
 </section>

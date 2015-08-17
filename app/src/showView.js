@@ -23,6 +23,18 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
 
         $scope.doc = {};
 
+        $scope.cancelItem = function (doc, section) {
+            $scope[section] = false;
+        };
+
+        $scope.saveItem = function (doc, section) {
+            $scope[section] = false;
+        };
+
+        $scope.editItem = function (section) {
+            $scope[section] = true;
+        };
+
         $scope.getDoc = function (type, id) {
             switch (type) {
                 case "contact":

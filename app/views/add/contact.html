@@ -1,0 +1,124 @@
+<h1>Ajouter un contact</h1>
+
+<article class="doc-edit">
+    <header>
+        <h2>Nom du contact</h2>
+    </header>
+    <section class="data edit">
+        <div class="key"><h3>Prénom</h3></div>
+        <div class="values">
+            <input type="text" ng-model="contactToCreate.firstname" autocomplete="off"/>
+        </div>
+    </section>
+    <section class="data edit">
+        <div class="key"><h3>Nom</h3></div>
+        <div class="values">
+            <input type="text" ng-model="contactToCreate.lastname" autocomplete="off"/>
+        </div>
+    </section>
+</article>
+
+<article class="doc-edit">
+    <header>
+        <h2>Informations générales</h2>
+    </header>
+    <section class="data edit">
+        <div class="key"><h3>Sexe</h3></div>
+        <div class="values">
+            <select ng-model="contact.gender">
+                <option value="man">Homme</option>
+                <option value="woman">Femme</option>
+            </select>
+        </div>
+    </section>
+    <section class="data edit">
+        <div class="key"><h3>Date de naissance</h3></div>
+        <div class="values">
+            <input type="date" ui-date="dateOptions" ng-model="contact.date_of_birth" placeholder="yyyy-MM-dd"
+                   autocomplete="off"/>
+        </div>
+    </section>
+    <section class="data edit">
+        <div class="key"><h3>Titre</h3></div>
+        <div class="values">
+            <input type="text" ng-model="contact.title" autocomplete="off"/>
+        </div>
+    </section>
+    <section class="data edit">
+        <div class="key"><h3>Langues</h3></div>
+        <div class="values">
+
+            <div class="tags" data-type="language">
+                <div class="results">
+                        <span ng-click="removeToResults('language', language)"
+                              ng-repeat="language in contact.languages">{{language.name}}</span>
+
+                    <input type="text" ng-model="searchLanguage"/>
+
+                </div>
+                <ul class="found">
+                    <li ng-click="addToResults('language', language)"
+                        ng-repeat="language in code_langues | searchFor:searchLanguage">
+                        <span>{{language.fr_name}}</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+
+</article>
+
+<article class="doc-edit">
+    <header>
+        <h2>Coordonnées</h2>
+    </header>
+    <section class="data edit">
+        <div class="key"><h3>Téléphones</h3></div>
+        <div class="values">
+            <div class="value" ng-repeat="phone in contact.phones">
+                <input type="text" international-phone-number default-country="ch"
+                       preferred-countries="ch, fr, de, it, at, be, nl, us"
+                       ng-model="phone.number" autocomplete="off"/>
+
+                <select ng-model="phone.type">
+                    <option value="mobile">Mobile</option>
+                    <option value="pro">Professionnel</option>
+                    <option value="perso">Personnel</option>
+                    <option value="Principal">Principal</option>
+                    <option value="Fax (professionnel)">Fax (professionnel)</option>
+                    <option value="Fax (personnel)">Fax (personnel)</option>
+                    <option value="other">Autre</option>
+                </select>
+            </div>
+            <button ng-click="addEditItem(contact.phones)">Ajouter un autre téléphone</button>
+        </div>
+    </section>
+    <section class="data edit">
+        <div class="key"><h3>E-mail</h3></div>
+        <div class="values">
+            <div class="value" ng-repeat="email in contact.emails">
+                <input type="text" ng-model="email.value" autocomplete="off"/>
+
+                <select ng-model="email.type">
+                    <option value="perso">Personnel</option>
+                    <option value="pro">Professionnel</option>
+                    <option value="other">Autre</option>
+                </select>
+            </div>
+            <button ng-click="addEditItem(contact.emails)">Ajouter une autre adresse e-mail</button>
+        </div>
+    </section>
+</article>
+
+<article class="doc-edit">
+    <header>
+        <h2>Commentaires</h2>
+    </header>
+    <section class="data edit block-value">
+        <textarea ng-model="contact.comment" rows="6"></textarea>
+    </section>
+</article>
+
+<button ng-click=""></button>

@@ -13,8 +13,49 @@ html, body {
     cursor: pointer;
 }
 
+input {
+    background-color: $white;
+    border: 1px solid $gray2;
+    padding: 0 4px;
+
+    &:focus {
+        outline: none;
+        border: 1px solid $gray4;
+    }
+}
+
+button {
+    display: inline-block;
+    background: none;
+    border: none;
+    color: $gray4;
+    font-family: $font-light;
+    //font-size: 0.85em;
+    padding: 0;
+}
+
 ul.action {
     display: none;
+    float: right;
+    color: $gray4;
+    font-size: 0.8em;
+    margin-top: -18px;
+    font-family: $font-light;
+
+    li {
+        display: inline-block;
+        margin-left: 10px;
+    }
+}
+
+.doc-show:hover {
+    ul.action {
+        display: block;
+    }
+}
+
+.doc-edit ul.action {
+    display: block;
 }
 
 header#header_bar {
@@ -121,10 +162,14 @@ section#body {
         width: 100%;
         min-width: 200px;
         max-width: 280px;
-        position: absolute;
+        position: fixed;
         background-color: $white;
-        box-shadow: 1px 2px 4px 0px rgba(0,0,0,0.25);
-        margin: 117px 0 0 0;
+        box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.25);
+        margin: 116px 0 0 0;
+
+        @media only screen and (max-height: 500px) {
+            margin: 20px 0 0 0;
+        }
 
         ul {
 
@@ -175,23 +220,197 @@ section#body {
                 font-family: $font-semi-bold;
             }
         }
+    }
 
-        article {
-            margin: 30px 0;
+    @media only screen and (max-width: 1260px) {
 
-            header {
-                border-bottom: 3px solid $gray2;
-                padding-bottom: 4px;
+        nav.left-nav {
+            margin-left: 20px;
+            width: 220px;
+        }
 
-                h2 {
-                    font-family: $font-semi-bold;
+        #docMain {
+            margin: 0 0 0 300px;
+        }
+
+    }
+
+    @media only screen and (max-width: 960px) {
+
+        margin-top: 100px;
+
+        nav.left-nav {
+            position: fixed;
+            top: 60px;
+            width: 100%;
+            margin: 0;
+            max-width: inherit;
+
+            ul {
+                overflow: scroll;
+                word-break: keep-all;
+                white-space: nowrap;
+
+                li {
+                    display: inline-block;
+                    border-bottom: none;
+                    padding: 0 10px;
+
+
+                    &.active {
+                        border-bottom: none;
+                    }
+
+                    span.label {
+                        padding: 0;
+                    }
                 }
-            }
-
-            & > section {
-                border-bottom: 1px solid $gray2;
             }
         }
 
+        #docMain {
+            margin: 0 auto;
+            width: 96%;
+            max-width: 580px;
+        }
+    }
+}
+
+article.doc-show,
+article.doc-edit {
+    margin: 30px 0;
+
+    header {
+        border-bottom: 3px solid $gray2;
+        padding-bottom: 4px;
+
+        h2 {
+            font-family: $font-semi-bold;
+        }
+    }
+}
+
+section.data {
+    border-bottom: 1px solid $gray2;
+    font-size: 0.9em;
+    padding: 6px 0;
+    line-height: 22px;
+
+    & > div {
+        vertical-align: top;
+
+    }
+
+    &.block-value {
+        line-height: inherit;
+    }
+
+    .key {
+        display: inline-block;
+        width: 39%;
+        padding: 0;
+        margin: 0;
+        color: $gray4;
+        font-family: $font-light;
+    }
+
+    .values {
+        display: inline-block;
+        width: 60%;
+        padding: 0;
+        margin: 0;
+    }
+
+    &.edit {
+        .value {
+            padding-bottom: 10px;
+
+            & > input,
+            & > select {
+                margin-right: 10px;
+            }
+
+            &:first-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    select {
+        -webkit-appearance: none;
+        background-color: $gray2;
+        background-image: url('../images/select.svg');
+        background-position: right center;
+        background-repeat: no-repeat;
+        padding: 0 20px 0 4px;
+        border: none;
+        @include border-radius(2px);
+        box-shadow: 1px 1px 0px 0px $gray3;
+
+        &:focus {
+            box-shadow: 2px 2px 0px 0px $gray3;
+            outline: none;
+        }
+
+    }
+
+    textarea {
+        width: 100%;
+        border: none;
+        background: transparent;
+        padding: 0;
+        outline: none;
+    }
+
+    select {
+        &:first-of-type {
+            margin-left: -4px;
+        }
+    }
+
+    input {
+        &:first-of-type {
+            margin-left: -5px;
+        }
+    }
+}
+
+#addView {
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    background-color: $white;
+    width: 580px;
+    margin-left: -320px;
+    z-index: 1000;
+    padding: 20px 30px 40px 30px;
+    box-shadow: 1px 5px 10px 0px rgba(0,0,0,0.25);
+    max-height: 70%;
+    overflow: scroll;
+
+    .content {
+        position: relative;
+        display: block;
+    }
+
+    h1 {
+        font-size: 1.5em;
+        font-family: $font-semi-bold;
+    }
+
+    a.block {
+        width: 180px;
+        height: 100px;
+        margin: 20px 16px 0 0;
+        background-color: $gray2;
+        display: inline-block;
+        font-family: $font-semi-bold;
+        line-height: 100px;
+        text-align: center;
+
+        &:nth-of-type(3) {
+            margin-right: 0;
+        }
+        
     }
 }

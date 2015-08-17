@@ -27,13 +27,13 @@
                 <li ng-click="cancelItem('contact', 'editTitle')">Annuler</li>
             </ul>
         </header>
-        <section>
+        <section class="data edit">
             <div class="key"><h3>Prénom</h3></div>
             <div class="values">
                 <input type="text" ng-model="contact.firstname" autocomplete="off"/>
             </div>
         </section>
-        <section>
+        <section class="data edit">
             <div class="key"><h3>Nom</h3></div>
             <div class="values">
                 <input type="text" ng-model="contact.lastname" autocomplete="off"/>
@@ -54,7 +54,7 @@
                 <li ng-click="editItem('editInfos')">Modifier</li>
             </ul>
         </header>
-        <section>
+        <section class="data">
             <div class="key"><h3>Sexe</h3></div>
             <div class="values">
                 <div class="value">
@@ -63,7 +63,7 @@
                 </div>
             </div>
         </section>
-        <section>
+        <section class="data">
             <div class="key"><h3>Date de naissance</h3></div>
             <div class="values">
                 <div class="value">{{contact.date_of_birth | date:'dd MMMM yyyy'}} ({{
@@ -72,13 +72,13 @@
                 </div>
             </div>
         </section>
-        <section>
+        <section class="data">
             <div class="key"><h3>Titre</h3></div>
             <div class="values">
                 <div class="value">{{contact.title}}</div>
             </div>
         </section>
-        <section>
+        <section class="data">
             <div class="key"><h3>Langues</h3></div>
             <div class="values">
                 <div class="value">
@@ -98,7 +98,7 @@
                 <li ng-click="cancelItem('contact', 'editInfos')">Annuler</li>
             </ul>
         </header>
-        <section>
+        <section class="data edit">
             <div class="key"><h3>Sexe</h3></div>
             <div class="values">
                 <select ng-model="contact.gender">
@@ -107,20 +107,20 @@
                 </select>
             </div>
         </section>
-        <section>
+        <section class="data edit">
             <div class="key"><h3>Date de naissance</h3></div>
             <div class="values">
                 <input type="date" ui-date="dateOptions" ng-model="contact.date_of_birth" placeholder="yyyy-MM-dd"
                        autocomplete="off"/>
             </div>
         </section>
-        <section>
+        <section class="data edit">
             <div class="key"><h3>Titre</h3></div>
             <div class="values">
                 <input type="text" ng-model="contact.title" autocomplete="off"/>
             </div>
         </section>
-        <section>
+        <section class="data edit">
             <div class="key"><h3>Langues</h3></div>
             <div class="values">
 
@@ -153,7 +153,7 @@
                 <li ng-click="editItem('editCoord')">Modifier</li>
             </ul>
         </header>
-        <section>
+        <section class="data">
             <div class="key"><h3>Téléphones</h3></div>
             <div class="values">
                 <div class="value" ng-repeat="phone in contact.phones">
@@ -162,7 +162,7 @@
                 </div>
             </div>
         </section>
-        <section>
+        <section class="data">
             <div class="key"><h3>E-mail</h3></div>
             <div class="values">
                 <div class="value" ng-repeat="email in contact.emails">
@@ -181,7 +181,7 @@
                 <li ng-click="cancelItem('contact', 'editCoord')">Annuler</li>
             </ul>
         </header>
-        <section>
+        <section class="data edit">
             <div class="key"><h3>Téléphones</h3></div>
             <div class="values">
                 <div class="value" ng-repeat="phone in contact.phones">
@@ -202,7 +202,7 @@
                 <button ng-click="addEditItem(contact.phones)">Ajouter un autre téléphone</button>
             </div>
         </section>
-        <section>
+        <section class="data edit">
             <div class="key"><h3>E-mail</h3></div>
             <div class="values">
                 <div class="value" ng-repeat="email in contact.emails">
@@ -226,7 +226,7 @@
                 <li ng-click="editItem('editComm')">Modifier</li>
             </ul>
         </header>
-        <section class="block-value">
+        <section class="data block-value">
             {{contact.comment}}
         </section>
     </article>
@@ -239,7 +239,7 @@
                 <li ng-click="cancelItem('contact', 'editComm')">Annuler</li>
             </ul>
         </header>
-        <section class="block-value">
+        <section class="data edit block-value">
             <textarea ng-model="contact.comment" rows="6"></textarea>
         </section>
     </article>
@@ -311,7 +311,7 @@
             <ul class="action">
             </ul>
         </header>
-        <section ng-repeat="location in personType.entity.locations">
+        <section  class="data" ng-repeat="location in personType.entity.locations">
             <div class="key"><h3>{{location.type}}</h3></div>
             <div class="values">
                 <div class="value">{{location.address}}</div>

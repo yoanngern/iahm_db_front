@@ -5,6 +5,7 @@ var iahmDBApp = angular.module('iahmDBApp', [
     'ngRoute',
     'LocalStorageModule',
     'iahmDBApp.showView',
+    'iahmDBApp.add',
     'iahmDBApp.navigation',
     'iahmDBApp.searchView'
 ]).
@@ -67,7 +68,13 @@ var iahmDBApp = angular.module('iahmDBApp', [
 
             $location.path("search");
 
-        }
+        };
+
+        $scope.addView = function () {
+
+            $scope.addViewStatus = true;
+
+        };
 
     }]);
 
