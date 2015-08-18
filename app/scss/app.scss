@@ -290,6 +290,15 @@ article.doc-edit {
     }
 }
 
+button.big {
+    background: $black;
+    color: $white;
+    font-family: $font-semi-bold;
+    @include border-radius(3px);
+    padding: 0 10px;
+    line-height: 30px;
+}
+
 section.data {
     border-bottom: 1px solid $gray2;
     font-size: 0.9em;
@@ -381,16 +390,27 @@ section.data {
     left: 50%;
     background-color: $white;
     width: 580px;
+    height: 100%;
     margin-left: -320px;
     z-index: 1000;
     padding: 20px 30px 40px 30px;
     box-shadow: 1px 5px 10px 0px rgba(0,0,0,0.25);
     max-height: 70%;
-    overflow: scroll;
+
 
     .content {
-        position: relative;
+        position: absolute;
         display: block;
+        overflow: scroll;
+        top: 20px;
+        bottom: 30px;
+        left: 10px;
+        right: 10px;
+        padding: 0 20px 0 20px;
+
+        & > div {
+            display: block;
+        }
     }
 
     h1 {

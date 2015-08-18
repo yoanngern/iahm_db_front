@@ -44,6 +44,8 @@
             <input type="text" ng-model="contact.title" autocomplete="off"/>
         </div>
     </section>
+
+    <!--
     <section class="data edit">
         <div class="key"><h3>Langues</h3></div>
         <div class="values">
@@ -56,16 +58,20 @@
                     <input type="text" ng-model="searchLanguage"/>
 
                 </div>
+
                 <ul class="found">
                     <li ng-click="addToResults('language', language)"
                         ng-repeat="language in code_langues | searchFor:searchLanguage">
                         <span>{{language.fr_name}}</span>
                     </li>
                 </ul>
+
+
             </div>
 
         </div>
     </section>
+    -->
 
 
 </article>
@@ -121,4 +127,4 @@
     </section>
 </article>
 
-<button ng-click=""></button>
+<button ng-click="saveNew()">Ajouter</button>

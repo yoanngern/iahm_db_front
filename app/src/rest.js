@@ -12,6 +12,15 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
 
     rest.Search = {};
 
+    rest.setArrayObject = function (objects) {
+
+        angular.forEach(objects, function(object, key) {
+            delete object.$$hashKey;
+        });
+
+        return objects;
+    };
+
 
     rest.Contact.getContacts = function () {
         rest.getRest('contacts/', "ContactsReceived");
@@ -164,6 +173,59 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
     };
 
 
+    rest.Contact.postContact = function (contact) {
+
+        if (contact == null) {
+            return false;
+        }
+
+        console.log(contact);
+
+        var contactToSave = {
+            contact: {
+                firstname: contact.firstname,
+                lastname: contact.lastname,
+                title: contact.title,
+                gender: contact.gender,
+                dateOfBirth: contact.date_of_birth,
+                languages: [],
+                events: contact.events,
+                phones: contact.phones,
+                emails: [],
+                memberOfs: [],
+                leaderOfs: [],
+                comment_txt: contact.comment,
+                type: contact.type
+            }
+        };
+
+        rest.postRest('contacts/', contactToSave, "ContactCreated");
+    };
+
+
+    rest.Entity.postEntity = function (entity) {
+
+        if (entity == null) {
+            return false;
+        }
+
+        console.log(entity);
+
+        var entityToSave = {
+            entity: {
+                name: entity.name,
+                type: entity.type,
+                locations: rest.setArrayObject(entity.locations),
+                phones: rest.setArrayObject(entity.phones),
+                emails: rest.setArrayObject(entity.emails),
+                comment_txt: entity.comment
+            }
+        };
+
+        rest.postRest('entities', entityToSave, "EntityCreated");
+    };
+
+
     rest.Search.search = function (query) {
 
         rest.getRest('search?' + query, "SearchFound");
@@ -224,6 +286,37 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
                 //$location.path('/doc/' + rest.doc_type + '/' + rest.doc.id);
 
                 $rootScope.$broadcast(event, data);
+
+            }).
+            error(function (data, status, headers, config) {
+
+                return false;
+            });
+
+    };
+
+    rest.postRest = function (rest_path, data, event) {
+
+        var config = {
+            dataType: "json",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        $http.post('http://iahmdb.local/app_dev.php/api/' + rest_path + "?access_token=" +
+            secure.oauth.access_token, JSON.stringify(data), config)
+            .success(function (data, status, headers, config) {
+
+                secure.isConnected = true;
+
+                var location = headers(['Location']);
+
+                console.log(location);
+
+                //$location.path('/doc/' + rest.doc_type + '/' + rest.doc.id);
+
+                $rootScope.$broadcast(event, $http.get('http://iahmdb.local' + location));
 
             }).
             error(function (data, status, headers, config) {

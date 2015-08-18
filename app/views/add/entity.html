@@ -1,1 +1,129 @@
 <h1>Ajouter une entité</h1>
+
+<article class="doc-edit">
+    <header>
+        <h2>Informations générales</h2>
+    </header>
+    <section class="data edit">
+        <div class="key"><h3>Nom de l'entité *</h3></div>
+        <div class="values">
+            <input type="text" ng-model="entityToCreate.name" autocomplete="off"/>
+        </div>
+    </section>
+    <section class="data edit">
+        <div class="key"><h3>Type *</h3></div>
+        <div class="values">
+            <select ng-model="entityToCreate.type">
+                <option value="family">Famille</option>
+                <option value="business">Entreprise</option>
+            </select>
+        </div>
+    </section>
+</article>
+
+<article class="doc-edit">
+    <header>
+        <h2>Coordonnées</h2>
+    </header>
+    <section class="data edit">
+        <div class="key"><h3>Téléphones</h3></div>
+        <div class="values">
+            <div class="value" ng-repeat="phone in entityToCreate.phones">
+                <input type="text" international-phone-number default-country="ch"
+                       preferred-countries="ch, fr, de, it, at, be, nl, us"
+                       ng-model="phone.number" autocomplete="off"/>
+
+                <select ng-model="phone.type">
+                    <option value="mobile">Mobile</option>
+                    <option value="pro">Professionnel</option>
+                    <option value="perso">Personnel</option>
+                    <option value="Principal">Principal</option>
+                    <option value="Fax (professionnel)">Fax (professionnel)</option>
+                    <option value="Fax (personnel)">Fax (personnel)</option>
+                    <option value="other">Autre</option>
+                </select>
+            </div>
+            <button ng-click="addEditItem(entityToCreate.phones)">Ajouter un autre téléphone</button>
+        </div>
+    </section>
+    <section class="data edit">
+        <div class="key"><h3>E-mail</h3></div>
+        <div class="values">
+            <div class="value" ng-repeat="email in entityToCreate.emails">
+                <input type="text" ng-model="email.value" autocomplete="off"/>
+
+                <select ng-model="email.type">
+                    <option value="perso">Personnel</option>
+                    <option value="pro">Professionnel</option>
+                    <option value="other">Autre</option>
+                </select>
+            </div>
+            <button ng-click="addEditItem(entityToCreate.emails)">Ajouter une autre adresse e-mail</button>
+        </div>
+    </section>
+</article>
+
+<article class="doc-edit" ng-repeat="location in entityToCreate.locations">
+    <header>
+        <h2>Adresse</h2>
+    </header>
+    <section class="data edit">
+        <div class="key"><h3>Type *</h3></div>
+        <div class="values">
+            <input type="text" ng-model="location.type" autocomplete="off"/>
+        </div>
+    </section>
+    <section class="data edit">
+        <div class="key"><h3>Rue *</h3></div>
+        <div class="values">
+            <input type="text" ng-model="location.address" autocomplete="off"/>
+        </div>
+    </section>
+    <section class="data edit">
+        <div class="key"><h3>Boîte postale</h3></div>
+        <div class="values">
+            <input type="text" ng-model="location.postbox" autocomplete="off"/>
+        </div>
+    </section>
+    <section class="data edit">
+        <div class="key"><h3>District</h3></div>
+        <div class="values">
+            <input type="text" ng-model="location.district" autocomplete="off"/>
+        </div>
+    </section>
+    <section class="data edit">
+        <div class="key"><h3>Département</h3></div>
+        <div class="values">
+            <input type="text" ng-model="location.department" autocomplete="off"/>
+        </div>
+    </section>
+    <section class="data edit">
+        <div class="key"><h3>Code Postale</h3></div>
+        <div class="values">
+            <input type="text" ng-model="location.postal_code" autocomplete="off"/>
+        </div>
+    </section>
+    <section class="data edit">
+        <div class="key"><h3>Ville *</h3></div>
+        <div class="values">
+            <input type="text" ng-model="location.city" autocomplete="off"/>
+        </div>
+    </section>
+    <section class="data edit">
+        <div class="key"><h3>Pays *</h3></div>
+        <div class="values">
+            <input type="text" ng-model="location.country" autocomplete="off"/>
+        </div>
+    </section>
+</article>
+
+<article class="doc-edit">
+    <header>
+        <h2>Commentaires</h2>
+    </header>
+    <section class="data edit block-value">
+        <textarea ng-model="entityToCreate.comment" rows="6"></textarea>
+    </section>
+</article>
+
+<button class="big" ng-click="saveNew('entity')">Créer l'entité</button>
