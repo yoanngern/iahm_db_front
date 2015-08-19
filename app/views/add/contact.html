@@ -1,17 +1,25 @@
-<h1>Ajouter un contact</h1>
+<h1>{{currentEntity.name}}</h1>
+
+<h2>Nouveau contact</h2>
 
 <article class="doc-edit">
     <header>
-        <h2>Nom du contact</h2>
+        <h2>Informations de base</h2>
     </header>
     <section class="data edit">
-        <div class="key"><h3>Prénom</h3></div>
+        <div class="key"><h3>Fonction/Role</h3></div>
+        <div class="values">
+            <input type="text" ng-model="contactToCreate.type" autocomplete="off"/>
+        </div>
+    </section>
+    <section class="data edit">
+        <div class="key"><h3>Prénom *</h3></div>
         <div class="values">
             <input type="text" ng-model="contactToCreate.firstname" autocomplete="off"/>
         </div>
     </section>
     <section class="data edit">
-        <div class="key"><h3>Nom</h3></div>
+        <div class="key"><h3>Nom *</h3></div>
         <div class="values">
             <input type="text" ng-model="contactToCreate.lastname" autocomplete="off"/>
         </div>
@@ -25,7 +33,7 @@
     <section class="data edit">
         <div class="key"><h3>Sexe</h3></div>
         <div class="values">
-            <select ng-model="contact.gender">
+            <select ng-model="contactToCreate.gender">
                 <option value="man">Homme</option>
                 <option value="woman">Femme</option>
             </select>
@@ -34,14 +42,14 @@
     <section class="data edit">
         <div class="key"><h3>Date de naissance</h3></div>
         <div class="values">
-            <input type="date" ui-date="dateOptions" ng-model="contact.date_of_birth" placeholder="yyyy-MM-dd"
+            <input type="date" ui-date="dateOptions" ng-model="contactToCreate.date_of_birth" placeholder="yyyy-MM-dd"
                    autocomplete="off"/>
         </div>
     </section>
     <section class="data edit">
         <div class="key"><h3>Titre</h3></div>
         <div class="values">
-            <input type="text" ng-model="contact.title" autocomplete="off"/>
+            <input type="text" ng-model="contactToCreate.title" autocomplete="off"/>
         </div>
     </section>
 
@@ -53,7 +61,7 @@
             <div class="tags" data-type="language">
                 <div class="results">
                         <span ng-click="removeToResults('language', language)"
-                              ng-repeat="language in contact.languages">{{language.name}}</span>
+                              ng-repeat="language in contactToCreate.languages">{{language.name}}</span>
 
                     <input type="text" ng-model="searchLanguage"/>
 
@@ -83,7 +91,7 @@
     <section class="data edit">
         <div class="key"><h3>Téléphones</h3></div>
         <div class="values">
-            <div class="value" ng-repeat="phone in contact.phones">
+            <div class="value" ng-repeat="phone in contactToCreate.phones">
                 <input type="text" international-phone-number default-country="ch"
                        preferred-countries="ch, fr, de, it, at, be, nl, us"
                        ng-model="phone.number" autocomplete="off"/>
@@ -98,13 +106,13 @@
                     <option value="other">Autre</option>
                 </select>
             </div>
-            <button ng-click="addEditItem(contact.phones)">Ajouter un autre téléphone</button>
+            <button ng-click="addEditItem(contactToCreate.phones)">Ajouter un autre téléphone</button>
         </div>
     </section>
     <section class="data edit">
         <div class="key"><h3>E-mail</h3></div>
         <div class="values">
-            <div class="value" ng-repeat="email in contact.emails">
+            <div class="value" ng-repeat="email in contactToCreate.emails">
                 <input type="text" ng-model="email.value" autocomplete="off"/>
 
                 <select ng-model="email.type">
@@ -113,7 +121,7 @@
                     <option value="other">Autre</option>
                 </select>
             </div>
-            <button ng-click="addEditItem(contact.emails)">Ajouter une autre adresse e-mail</button>
+            <button ng-click="addEditItem(contactToCreate.emails)">Ajouter une autre adresse e-mail</button>
         </div>
     </section>
 </article>
@@ -123,8 +131,8 @@
         <h2>Commentaires</h2>
     </header>
     <section class="data edit block-value">
-        <textarea ng-model="contact.comment" rows="6"></textarea>
+        <textarea ng-model="contactToCreate.comment" rows="6"></textarea>
     </section>
 </article>
 
-<button ng-click="saveNew()">Ajouter</button>
+<button class="big" ng-click="saveNew('contact')">Ajouter le contact</button>

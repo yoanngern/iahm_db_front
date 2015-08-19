@@ -54,7 +54,7 @@ angular.module('iahmDBApp.searchView', ['ngRoute'])
 
             var query = "q=" + $scope.searchRequest;
 
-            rest.Search.search(query);
+            rest.Search.search(query, "SearchFound");
 
         }, true);
 

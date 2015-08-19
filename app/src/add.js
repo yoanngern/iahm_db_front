@@ -4,7 +4,9 @@ angular.module('iahmDBApp.add', [])
 
     .controller('addCtrl', ['$scope', 'rest', function ($scope, rest) {
 
-        $scope.addItem_type = "";
+        $scope.addItem_view = "choice";
+
+        $scope.searchEntity_val = "vvv";
 
         $scope.contactToCreate = {};
         $scope.entityToCreate = {};
@@ -14,12 +16,26 @@ angular.module('iahmDBApp.add', [])
 
         $scope.openView = function () {
 
-            console.log("addView()");
+            console.log("openView()");
 
         };
 
+
+        $scope.searchEntity = function () {
+
+            console.log($scope.searchEntity_val);
+
+            var query = "q=" + $scope.searchEntity_value + " AND doc_type:entity";
+
+            //rest.Search.search(query, "SearchEntityFound");
+        };
+
+        $scope.$on('SearchEntityFound', function(event, data) {
+            $scope.foundEntities = data;
+        });
+
         $scope.addItem = function (item_type) {
-            $scope.addItem_type = item_type;
+            $scope.addItem_view = item_type;
 
             switch (item_type) {
                 case 'entity':
@@ -58,7 +74,7 @@ angular.module('iahmDBApp.add', [])
                     break;
 
                 case 'contact':
-                    $scope.setContact();
+                    rest.Entity.postContact($scope.currentEntity, $scope.contactToCreate);
 
                     break;
 
@@ -80,12 +96,13 @@ angular.module('iahmDBApp.add', [])
         };
 
         $scope.setEntity = function () {
+            $scope.entityToCreate = {};
             $scope.entityToCreate.locations = [];
             $scope.entityToCreate.locations.push({});
         };
 
         $scope.setContact = function () {
-
+            $scope.contactToCreate = {};
         };
 
         $scope.setGroup = function () {
@@ -101,10 +118,21 @@ angular.module('iahmDBApp.add', [])
         };
 
         $scope.$on('EntityCreated', function (event, data) {
-            var entity = data;
 
-            console.log(entity);
+            $scope.currentEntity = data;
 
+            $scope.addItem("choiceEntity");
+
+        });
+
+
+        $scope.$on('ContactCreated', function (event, data) {
+
+            console.log("ContactCreated");
+
+            $scope.currentContact = data;
+
+            $scope.addItem("choiceEntity");
         });
 
     }]);

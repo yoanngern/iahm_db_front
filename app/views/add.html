@@ -1,8 +1,11 @@
 <div class="content">
-    <div ng-if="addItem_type == ''" ng-include="'views/add/choice.html'"></div>
-    <div ng-if="addItem_type == 'contact'" ng-include="'views/add/contact.html'"></div>
-    <div ng-if="addItem_type == 'entity'" ng-include="'views/add/entity.html'"></div>
-    <div ng-if="addItem_type == 'group'" ng-include="'views/add/group.html'"></div>
-    <div ng-if="addItem_type == 'donation'" ng-include="'views/add/donation.html'"></div>
-    <div ng-if="addItem_type == 'event'" ng-include="'views/add/event.html'"></div>
+    <div ng-if="addItem_view == 'choice'" ng-include="'views/add/choice.html'"></div>
+    <div ng-if="addItem_view == 'choiceEntity'" ng-include="'views/add/choiceEntity.html'"></div>
+    <div ng-if="addItem_view == 'searchEntity'" ng-include="'views/add/searchEntity.html'"></div>
+    <div ng-if="addItem_view == 'choiceContact'" ng-include="'views/add/choiceContact.html'"></div>
+    <div ng-if="addItem_view == 'contact'" ng-include="'views/add/contact.html'"></div>
+    <div ng-if="addItem_view == 'entity'" ng-include="'views/add/entity.html'"></div>
+    <div ng-if="addItem_view == 'group'" ng-include="'views/add/group.html'"></div>
+    <div ng-if="addItem_view == 'donation'" ng-include="'views/add/donation.html'"></div>
+    <div ng-if="addItem_view == 'event'" ng-include="'views/add/event.html'"></div>
 </div>

@@ -1,0 +1,11 @@
+<h1>Rechercher une entité</h1>
+
+{{searchEntity_val}}
+
+<input type="text" ng-model="searchEntity_val" ng-change="searchEntity()" autocomplete="off" autofocus>
+
+<ul class="results">
+    <li class="result" ng-repeat="entity in foundEntities">
+        <h1>{{entity.name}}</h1>
+    </li>
+</ul>

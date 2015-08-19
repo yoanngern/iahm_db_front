@@ -3,6 +3,8 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
 
     var rest = {};
 
+    rest.apiURL = 'http://iahmdb.local/app_dev.php/api/';
+
     rest.Contact = {};
     rest.Entity = {};
     rest.Donation = {};
@@ -14,7 +16,7 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
 
     rest.setArrayObject = function (objects) {
 
-        angular.forEach(objects, function(object, key) {
+        angular.forEach(objects, function (object, key) {
             delete object.$$hashKey;
         });
 
@@ -173,9 +175,9 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
     };
 
 
-    rest.Contact.postContact = function (contact) {
+    rest.Entity.postContact = function (entity, contact) {
 
-        if (contact == null) {
+        if (entity == null || contact == null) {
             return false;
         }
 
@@ -189,17 +191,15 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
                 gender: contact.gender,
                 dateOfBirth: contact.date_of_birth,
                 languages: [],
-                events: contact.events,
-                phones: contact.phones,
-                emails: [],
-                memberOfs: [],
-                leaderOfs: [],
+                phones: rest.setArrayObject(contact.phones),
+                emails: rest.setArrayObject(contact.emails),
                 comment_txt: contact.comment,
                 type: contact.type
             }
         };
 
-        rest.postRest('contacts/', contactToSave, "ContactCreated");
+        rest.postRest('entities/' + entity.id + '/contacts', contactToSave, "ContactCreated");
+
     };
 
 
@@ -223,12 +223,41 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
         };
 
         rest.postRest('entities', entityToSave, "EntityCreated");
+
     };
 
 
-    rest.Search.search = function (query) {
+    rest.Search.search = function (query, event) {
 
-        rest.getRest('search?' + query, "SearchFound");
+        rest.getRest('search?' + query, event);
+    };
+
+
+    rest.getURL = function (url, event) {
+
+        var req = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            params: {
+                access_token: secure.oauth.access_token
+            }
+        };
+
+        $http.get(url, req).
+            then(function (response) {
+
+                secure.isConnected = true;
+
+                $rootScope.$broadcast(event, response.data);
+
+            }, function (response) {
+
+                return false;
+
+            });
+
     };
 
 
@@ -274,11 +303,13 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
             dataType: "json",
             headers: {
                 'Content-Type': 'application/json'
+            },
+            params: {
+                access_token: secure.oauth.access_token
             }
         };
 
-        $http.put('http://iahmdb.local/app_dev.php/api/' + rest_path + "?access_token=" +
-            secure.oauth.access_token, JSON.stringify(data), config)
+        $http.put('http://iahmdb.local/app_dev.php/api/' + rest_path, JSON.stringify(data), config)
             .success(function (data, status, headers, config) {
 
                 secure.isConnected = true;
@@ -301,27 +332,26 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
             dataType: "json",
             headers: {
                 'Content-Type': 'application/json'
+            },
+            params: {
+                access_token: secure.oauth.access_token
             }
         };
 
-        $http.post('http://iahmdb.local/app_dev.php/api/' + rest_path + "?access_token=" +
-            secure.oauth.access_token, JSON.stringify(data), config)
-            .success(function (data, status, headers, config) {
+
+        $http.post('http://iahmdb.local/app_dev.php/api/' + rest_path, JSON.stringify(data), config).
+            then(function (response) {
 
                 secure.isConnected = true;
 
-                var location = headers(['Location']);
+                var location = response.headers("Location");
 
-                console.log(location);
+                rest.getURL('http://iahmdb.local' + location, event);
 
-                //$location.path('/doc/' + rest.doc_type + '/' + rest.doc.id);
-
-                $rootScope.$broadcast(event, $http.get('http://iahmdb.local' + location));
-
-            }).
-            error(function (data, status, headers, config) {
+            }, function (response) {
 
                 return false;
+
             });
 
     };
