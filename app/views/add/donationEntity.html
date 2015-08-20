@@ -5,3 +5,44 @@
 
 <h2 class="sub_title">Créer un don</h2>
 
+<article class="doc-edit">
+    <header>
+        <h2>Informations</h2>
+    </header>
+    <section class="data edit">
+        <div class="key"><h3>Date *</h3></div>
+        <div class="values">
+            <input type="text" ng-model="donationToCreate.date" autocomplete="off"/>
+        </div>
+    </section>
+    <section class="data edit">
+        <div class="key"><h3>Montant *</h3></div>
+        <div class="values">
+            <input type="text" ng-model="donationToCreate.amount" autocomplete="off"/>
+            <select ng-model="donationToCreate.currency">
+                <option value="chf">CHF</option>
+                <option value="eur">Euro</option>
+            </select>
+        </div>
+    </section>
+    <section class="data edit">
+        <div class="key"><h3>Type *</h3></div>
+        <div class="values">
+            <select ng-model="donationToCreate.type">
+                <option value="creditCard">Carte de crédit</option>
+                <option value="especes">Espèces</option>
+            </select>
+        </div>
+    </section>
+</article>
+
+<article class="doc-edit">
+    <header>
+        <h2>Commentaires</h2>
+    </header>
+    <section class="data edit block-value">
+        <textarea ng-model="donationToCreate.comment" rows="6"></textarea>
+    </section>
+</article>
+
+<button class="big" ng-click="saveNew('donationEntity')">Enregistrer le don</button>

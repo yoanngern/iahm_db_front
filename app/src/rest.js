@@ -227,6 +227,74 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
     };
 
 
+    rest.Donation.postDonation = function (donation) {
+
+        if (donation == null) {
+            return false;
+        }
+
+        console.log(donation);
+
+        var donationToSave = {
+            donation: {
+                date: "2011-06-05 12:15:00",//donation.date,
+                amount: donation.amount,
+                currency: donation.currency,
+                type: donation.type,
+                comment_txt: donation.comment
+            }
+        };
+
+        rest.postRest('donations', donationToSave, "DonationCreated");
+
+    };
+
+
+    rest.Contact.postDonation = function (contact, donation) {
+
+        if (donation == null || contact == null) {
+            return false;
+        }
+
+        console.log(donation);
+
+        var donationToSave = {
+            donation: {
+                date: "2011-06-05 12:15:00",//donation.date,
+                amount: donation.amount,
+                currency: donation.currency,
+                type: donation.type,
+                comment_txt: donation.comment
+            }
+        };
+
+        rest.postRest('contacts/' + contact.id + '/donations', donationToSave, "DonationCreated");
+
+    };
+
+    rest.Entity.postDonation = function (entity, donation) {
+
+        if (donation == null || entity == null) {
+            return false;
+        }
+
+        console.log(donation);
+
+        var donationToSave = {
+            donation: {
+                date: "2011-06-05 12:15:00",//donation.date,
+                amount: donation.amount,
+                currency: donation.currency,
+                type: donation.type,
+                comment_txt: donation.comment
+            }
+        };
+
+        rest.postRest('entities/' + entity.id + '/donations', donationToSave, "DonationCreated");
+
+    };
+
+
     rest.Search.search = function (query, event) {
 
         rest.getRest('search?' + query, event);

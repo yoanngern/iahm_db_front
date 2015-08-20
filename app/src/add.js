@@ -122,7 +122,17 @@ angular.module('iahmDBApp.add', [])
                     break;
 
                 case 'donation':
-                    $scope.setDonation();
+                    rest.Donation.postDonation($scope.donationToCreate);
+
+                    break;
+
+                case 'donationContact':
+                    rest.Contact.postDonation($scope.currentContact, $scope.donationToCreate);
+
+                    break;
+
+                case 'donationEntity':
+                    rest.Entity.postDonation($scope.currentEntity, $scope.donationToCreate);
 
                     break;
             }
@@ -166,6 +176,13 @@ angular.module('iahmDBApp.add', [])
             $scope.currentContact = data;
 
             $scope.addItem("choiceEntity");
+        });
+
+        $scope.$on('DonationCreated', function (event, data) {
+
+            console.log("DonationCreated");
+
+            $scope.closeAddView();
         });
 
     }]);
