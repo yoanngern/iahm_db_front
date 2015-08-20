@@ -1,11 +1,13 @@
-<h1>Rechercher une entité</h1>
+<header>
+    <div id="icon_type" class="entity"></div>
+    <h1>Rechercher une entité</h1>
+</header>
 
-{{searchEntity_val}}
-
-<input type="text" ng-model="searchEntity_val" ng-change="searchEntity()" autocomplete="off" autofocus>
+<input class="searchEntity" type="text" ng-model="searchEntity_val" ng-change="searchEntity(searchEntity_val)" autocomplete="off" autofocus>
 
 <ul class="results">
-    <li class="result" ng-repeat="entity in foundEntities">
-        <h1>{{entity.name}}</h1>
+    <li class="result" ng-click="selectEntity(entity.entity_id)" ng-repeat="entity in foundEntities">
+        <div id="icon_type" class="{{entity.type}}"></div>
+        <h1>{{entity.title}}</h1>
     </li>
 </ul>

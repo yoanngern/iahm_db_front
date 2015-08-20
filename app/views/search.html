@@ -16,9 +16,16 @@
 
 <ul class="results">
     <li ng-click="showView(doc.doc_type, doc.entity_id)" ng-repeat="doc in results.documents" class="{{doc.doc_type}}">
-        <h1>{{ doc.doc_title }}</h1>
 
-        <p>{{doc.doc_description}}</p>
+        <div class="icon">
+            <div id="icon_type" ng-if="doc.doc_type != 'entity'" class="{{doc.doc_type}}"></div>
+            <div id="icon_type" ng-if="doc.doc_type == 'entity'" class="{{doc.type}}"></div>
+        </div>
+        <div class="text">
+            <h1>{{ doc.doc_title }}</h1>
+
+            <p>{{doc.doc_description}}</p>
+        </div>
     </li>
 </ul>
 

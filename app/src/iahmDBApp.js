@@ -76,5 +76,13 @@ var iahmDBApp = angular.module('iahmDBApp', [
 
         };
 
+        $scope.closeAddView = function () {
+
+            $scope.addViewStatus = false;
+
+        };
+
+
+
     }]);
 

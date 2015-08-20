@@ -1,0 +1,13 @@
+<header>
+    <div id="icon_type" class="contact"></div>
+    <h1>Rechercher un contact</h1>
+</header>
+
+<input class="searchContact" type="text" ng-model="searchContact_val" ng-change="searchContact(searchContact_val)" autocomplete="off" autofocus>
+
+<ul class="results">
+    <li class="result" ng-click="selectContact(contact.entity_id)" ng-repeat="contact in foundContacts">
+        <div id="icon_type" class="contact"></div>
+        <h1>{{contact.firstname}} {{contact.lastname}}</h1>
+    </li>
+</ul>

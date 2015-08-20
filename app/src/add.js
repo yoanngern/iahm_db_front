@@ -6,8 +6,6 @@ angular.module('iahmDBApp.add', [])
 
         $scope.addItem_view = "choice";
 
-        $scope.searchEntity_val = "vvv";
-
         $scope.contactToCreate = {};
         $scope.entityToCreate = {};
         $scope.donationToCreate = {};
@@ -21,18 +19,53 @@ angular.module('iahmDBApp.add', [])
         };
 
 
-        $scope.searchEntity = function () {
+        $scope.searchEntity = function (val) {
 
-            console.log($scope.searchEntity_val);
+            console.log(val);
 
-            var query = "q=" + $scope.searchEntity_value + " AND doc_type:entity";
+            var query = "q=" + val + " AND doc_type:entity";
 
-            //rest.Search.search(query, "SearchEntityFound");
+            rest.Search.search(query, "SearchEntityFound");
+        };
+
+        $scope.selectEntity = function (entity_id) {
+
+            rest.Entity.getEntity(entity_id);
         };
 
         $scope.$on('SearchEntityFound', function(event, data) {
-            $scope.foundEntities = data;
+            $scope.foundEntities = data.documents;
         });
+
+        $scope.$on('EntityReceived', function(event, data) {
+
+            $scope.currentEntity = data;
+            $scope.addItem("entityAction");
+        });
+
+
+        $scope.searchContact = function (val) {
+
+            var query = "q=" + val + " AND doc_type:contact";
+
+            rest.Search.search(query, "SearchContactFound");
+        };
+
+        $scope.selectContact = function (contact_id) {
+
+            rest.Contact.getContact(contact_id);
+        };
+
+        $scope.$on('SearchContactFound', function(event, data) {
+            $scope.foundContacts = data.documents;
+        });
+
+        $scope.$on('ContactReceived', function(event, data) {
+
+            $scope.currentContact = data;
+            $scope.addItem("contactAction");
+        });
+
 
         $scope.addItem = function (item_type) {
             $scope.addItem_view = item_type;
