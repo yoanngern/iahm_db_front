@@ -2,3 +2,36 @@
     <div id="icon_type" class="event"></div>
     <h1>Ajouter un événement</h1>
 </header>
+
+<article class="doc-edit">
+    <header>
+        <h2>Informations</h2>
+    </header>
+    <section class="data edit">
+        <div class="key"><h3>Titre *</h3></div>
+        <div class="values">
+            <input type="text" ng-model="eventToCreate.title" autocomplete="off"/>
+        </div>
+    </section>
+    <section class="data edit">
+        <div class="key"><h3>Début</h3></div>
+        <div class="values">
+            <input type="text" ng-model="eventToCreate.start" autocomplete="off"/>
+        </div>
+    </section>
+    <section class="data edit">
+        <div class="key"><h3>Fin</h3></div>
+        <div class="values">
+            <input type="text" ng-model="eventToCreate.end" autocomplete="off"/>
+        </div>
+    </section>
+</article>
+
+<footer>
+    <div class="left">
+        <button class="big" ng-click="addItem('choice')">Retour</button>
+    </div>
+    <div class="right">
+        <button class="big" ng-click="saveNew('event')">Créer l'événement</button>
+    </div>
+</footer>

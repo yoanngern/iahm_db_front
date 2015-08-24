@@ -10,4 +10,13 @@
         <div id="icon_type" class="{{entity.type}}"></div>
         <h1>{{entity.title}}</h1>
     </li>
+    <li ng-show="!foundEntities.length">No entity found</li>
 </ul>
+
+<footer>
+    <div class="left">
+        <button class="big" ng-click="addItem('choice')">Retour</button>
+    </div>
+    <div class="right">
+    </div>
+</footer>

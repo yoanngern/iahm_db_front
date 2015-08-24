@@ -21,9 +21,14 @@ angular.module('iahmDBApp.add', [])
 
         $scope.searchEntity = function (val) {
 
-            console.log(val);
+            if(val == "" || val == null) {
 
-            var query = "q=" + val + " AND doc_type:entity";
+                $scope.foundEntities = [];
+
+                return false;
+            }
+
+            var query = "q=" + val + "~* AND doc_type:entity";
 
             rest.Search.search(query, "SearchEntityFound");
         };
@@ -46,7 +51,14 @@ angular.module('iahmDBApp.add', [])
 
         $scope.searchContact = function (val) {
 
-            var query = "q=" + val + " AND doc_type:contact";
+            if(val == "" || val == null) {
+
+                $scope.foundContacts = [];
+
+                return false;
+            }
+
+            var query = "q=" + val + "~* AND doc_type:contact";
 
             rest.Search.search(query, "SearchContactFound");
         };
@@ -112,12 +124,12 @@ angular.module('iahmDBApp.add', [])
                     break;
 
                 case 'event':
-                    $scope.setEvent();
+                    rest.Event.postEvent($scope.eventToCreate);
 
                     break;
 
                 case 'group':
-                    $scope.setGroup();
+                    rest.Group.postGroup($scope.groupToCreate);
 
                     break;
 
@@ -181,6 +193,20 @@ angular.module('iahmDBApp.add', [])
         $scope.$on('DonationCreated', function (event, data) {
 
             console.log("DonationCreated");
+
+            $scope.closeAddView();
+        });
+
+        $scope.$on('EventCreated', function (event, data) {
+
+            console.log("EventCreated");
+
+            $scope.closeAddView();
+        });
+
+        $scope.$on('GroupCreated', function (event, data) {
+
+            console.log("GroupCreated");
 
             $scope.closeAddView();
         });

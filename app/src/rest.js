@@ -294,6 +294,44 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
 
     };
 
+    rest.Event.postEvent = function (event) {
+
+        if (event == null) {
+            return false;
+        }
+
+        console.log(event);
+
+        var eventToSave = {
+            event: {
+                title: event.title,
+                start: "2011-06-05 12:15:00", //event.start,
+                end: "2011-06-05 12:15:00" //event.end
+            }
+        };
+
+        rest.postRest('events', eventToSave, "EventCreated");
+
+    };
+
+    rest.Group.postGroup = function (group) {
+
+        if (group == null) {
+            return false;
+        }
+
+        console.log(group);
+
+        var groupToSave = {
+            group: {
+                title: group.title
+            }
+        };
+
+        rest.postRest('groups', groupToSave, "GroupCreated");
+
+    };
+
 
     rest.Search.search = function (query, event) {
 
