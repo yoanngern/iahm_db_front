@@ -112,14 +112,16 @@
         <section class="data edit">
             <div class="key"><h3>Date de naissance</h3></div>
             <div class="values">
-                <input type="date" ng-model="contact.date_of_birth" placeholder="yyyy-MM-dd"
-                       autocomplete="off"/>
+                <div sb-date-select ng-model="contact.date_of_birth"></div>
             </div>
         </section>
         <section class="data edit">
             <div class="key"><h3>Titre</h3></div>
             <div class="values">
-                <input type="text" ng-model="contact.title" autocomplete="off"/>
+                <select ng-model="contact.title">
+                    <option value="Madame">Madame</option>
+                    <option value="Monsieur">Monsieur</option>
+                </select>
             </div>
         </section>
         <section class="data edit">

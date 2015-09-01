@@ -5,6 +5,7 @@ var iahmDBApp = angular.module('iahmDBApp', [
     'ngRoute',
     'angular-momentjs',
     'angularMoment',
+    'sbDateSelect',
     'LocalStorageModule',
     'iahmDBApp.showView',
     'iahmDBApp.add',
@@ -17,17 +18,17 @@ var iahmDBApp = angular.module('iahmDBApp', [
 
 
     /*
-    .run(function (amMoment) {
-        amMoment.changeLocale('fr');
-    })
-*/
+     .run(function (amMoment) {
+     amMoment.changeLocale('fr');
+     })
+     */
 
     /*
-    .constant('angularMomentConfig', {
-        preprocess: 'unix', // optional
-        timezone: 'Europe/London' // optional
-    })
-*/
+     .constant('angularMomentConfig', {
+     preprocess: 'unix', // optional
+     timezone: 'Europe/London' // optional
+     })
+     */
 
     /*
      .config(function ($locationProvider) {
@@ -102,4 +103,3 @@ var iahmDBApp = angular.module('iahmDBApp', [
 
 
     }]);
-

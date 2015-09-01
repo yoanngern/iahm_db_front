@@ -416,8 +416,8 @@ section.data {
         }
 
         .values {
-            & > input,
-            & > select {
+            & input,
+            & select {
                 margin-right: 10px;
             }
         }

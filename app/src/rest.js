@@ -1,4 +1,4 @@
-iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $rootScope, secure) {
+iahmDBApp.factory('rest', ['$http', '$rootScope', '$moment', 'secure', function ($http, $rootScope, $moment, secure) {
 
 
     var rest = {};
@@ -21,6 +21,18 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
         });
 
         return objects;
+    };
+
+    rest.setArrayId = function (objects, id_label) {
+
+        var newArray = [];
+
+        angular.forEach(objects, function (object, key) {
+
+            newArray.push(object[id_label]);
+        });
+
+        return newArray;
     };
 
 
@@ -120,13 +132,11 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
                 lastname: contact.lastname,
                 title: contact.title,
                 gender: contact.gender,
-                dateOfBirth: contact.date_of_birth,
-                languages: [],
-                events: contact.events,
-                phones: contact.phones,
-                emails: [],
-                memberOfs: [],
-                leaderOfs: [],
+                dateOfBirth: $moment(contact.date_of_birth),
+                languages: rest.setArrayId(contact.languages, "ref"),
+                events: rest.setArrayId(contact.events, "id"),
+                phones: rest.setArrayObject(contact.phones),
+                emails: rest.setArrayObject(contact.emails),
                 comment_txt: contact.comment,
                 type: contact.type
             }
@@ -190,7 +200,7 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', 'secure', function ($http, $ro
                 title: contact.title,
                 gender: contact.gender,
                 dateOfBirth: contact.date_of_birth,
-                languages: [],
+                languages: rest.setArrayId(contact.languages, "ref"),
                 phones: rest.setArrayObject(contact.phones),
                 emails: rest.setArrayObject(contact.emails),
                 comment_txt: contact.comment,

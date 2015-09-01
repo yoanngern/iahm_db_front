@@ -21,13 +21,28 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
             $scope.doc_id = $routeParams.id;
         }
 
+
         $scope.doc = {};
 
         $scope.cancelItem = function (doc, section) {
             $scope[section] = false;
         };
 
+        $scope.addEditItem = function (items) {
+
+            var item = {};
+
+            items.push(item);
+        };
+
         $scope.saveItem = function (doc, section) {
+
+            console.log("saveItem");
+
+            if (doc === "contact") {
+                rest.Contact.putContact($scope.contact);
+            }
+
             $scope[section] = false;
         };
 
@@ -74,7 +89,7 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
         $scope.$on('ContactReceived', function (event, data) {
             $scope.doc = data;
 
-            $scope.doc.date_of_birth = new Date($moment($scope.doc.date_of_birth));
+            $scope.doc.date_of_birth = $moment($scope.doc.date_of_birth);
 
             $scope.contact = $scope.doc;
 
@@ -84,6 +99,15 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
             $scope.doc = data;
             $scope.entity = $scope.doc;
         });
+
+
+        $scope.$on('ContactUpdated', function (event, data) {
+
+            rest.Contact.getContact($scope.contact.id);
+
+        });
+
+
 
     }])
 
