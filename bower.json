@@ -15,7 +15,7 @@
     "angular-route": "~1.4.3",
     "angular-sb-date-select": "~0.3.5",
     "html5-boilerplate": "~5.2.0",
-    "international-phone-number": "~0.0.8",
+    "international-phone-number": "~0.0.10",
     "moment-timezone": "~0.4.0"
   },
   "resolutions": {
