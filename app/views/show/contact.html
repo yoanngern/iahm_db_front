@@ -68,8 +68,8 @@
         <section class="data">
             <div class="key"><h3>Date de naissance</h3></div>
             <div class="values">
-                <div class="value">{{contact.date_of_birth | date:'dd MMMM yyyy'}} ({{
-                    calculateAge(contact.date_of_birth)}}
+
+                <div class="value">{{contact.date_of_birth | amDateFormat:'Do MMMM YYYY'}} ({{contact.date_of_birth | ageFilter}}
                     ans)
                 </div>
             </div>
@@ -112,7 +112,7 @@
         <section class="data edit">
             <div class="key"><h3>Date de naissance</h3></div>
             <div class="values">
-                <input type="date" ui-date="dateOptions" ng-model="contact.date_of_birth" placeholder="yyyy-MM-dd"
+                <input type="date" ng-model="contact.date_of_birth" placeholder="yyyy-MM-dd"
                        autocomplete="off"/>
             </div>
         </section>
@@ -134,12 +134,14 @@
                         <input type="text" ng-model="searchLanguage"/>
 
                     </div>
+                    <!--
                     <ul class="found">
                         <li ng-click="addToResults('language', language)"
                             ng-repeat="language in code_langues | searchFor:searchLanguage">
                             <span>{{language.fr_name}}</span>
                         </li>
                     </ul>
+                    -->
                 </div>
 
             </div>

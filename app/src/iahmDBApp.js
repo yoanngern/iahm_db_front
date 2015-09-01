@@ -3,6 +3,8 @@
 // Declare app level module which depends on views, and components
 var iahmDBApp = angular.module('iahmDBApp', [
     'ngRoute',
+    'angular-momentjs',
+    'angularMoment',
     'LocalStorageModule',
     'iahmDBApp.showView',
     'iahmDBApp.add',
@@ -13,13 +15,29 @@ var iahmDBApp = angular.module('iahmDBApp', [
         $routeProvider.otherwise({redirectTo: '/search'});
     }])
 
+
+    /*
+    .run(function (amMoment) {
+        amMoment.changeLocale('fr');
+    })
+*/
+
+    /*
+    .constant('angularMomentConfig', {
+        preprocess: 'unix', // optional
+        timezone: 'Europe/London' // optional
+    })
+*/
+
     /*
      .config(function ($locationProvider) {
      $locationProvider.html5Mode(true).hashPrefix('!');
      })
      */
 
-    .controller('appCtrl', ['$scope', '$location', 'localStorageService', 'secure', function ($scope, $location, localStorageService, secure) {
+    .controller('appCtrl', ['$scope', '$location', 'localStorageService', 'secure', '$moment', 'amMoment', function ($scope, $location, localStorageService, secure, $moment, amMoment) {
+
+        //amMoment.changeLocale('fr');
 
         $scope.isConnected = function () {
             return secure.isConnected;
@@ -81,7 +99,6 @@ var iahmDBApp = angular.module('iahmDBApp', [
             $scope.addViewStatus = false;
 
         };
-
 
 
     }]);

@@ -9,7 +9,7 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
         });
     }])
 
-    .controller('showCtrl', ['$scope', '$http', '$routeParams', '$location', 'rest', function ($scope, $http, $routeParams, $location, rest) {
+    .controller('showCtrl', ['$scope', '$http', '$routeParams', '$location', 'rest', '$moment', function ($scope, $http, $routeParams, $location, rest, $moment) {
 
         if (typeof($routeParams.doc_type) === 'undefined' ||
             typeof($routeParams.id) === 'undefined') {
@@ -73,7 +73,11 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
 
         $scope.$on('ContactReceived', function (event, data) {
             $scope.doc = data;
+
+            $scope.doc.date_of_birth = new Date($moment($scope.doc.date_of_birth));
+
             $scope.contact = $scope.doc;
+
         });
 
         $scope.$on('EntityReceived', function (event, data) {
@@ -83,9 +87,37 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
 
     }])
 
+    .filter('ageFilter', function () {
+        function calculateAge(birthday) { // birthday is a date
+
+            birthday = new Date(birthday);
+
+            var ageDifMs = Date.now() - birthday.getTime();
+            var ageDate = new Date(ageDifMs); // miliseconds from epoch
+            return Math.abs(ageDate.getUTCFullYear() - 1970);
+        }
+
+        function monthDiff(d1, d2) {
+            if (d1 < d2) {
+                var months = d2.getMonth() - d1.getMonth();
+                return months <= 0 ? 0 : months;
+            }
+            return 0;
+        }
+
+        return function (birthdate) {
+            var age = calculateAge(birthdate);
+            if (age == 0)
+                return monthDiff(birthdate, new Date()) + ' months';
+            return age;
+        };
+    })
+
     .filter('tel', function () {
         return function (tel) {
-            if (!tel) { return ''; }
+            if (!tel) {
+                return '';
+            }
 
             var value = tel.toString().trim().replace(/^\+/, '');
 
