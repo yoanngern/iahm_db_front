@@ -132,7 +132,7 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', '$moment', 'secure', function 
                 lastname: contact.lastname,
                 title: contact.title,
                 gender: contact.gender,
-                dateOfBirth: $moment(contact.date_of_birth),
+                dateOfBirth: $moment(contact.date_of_birth).format('YYYY-MM-DD'),
                 languages: rest.setArrayId(contact.languages, "ref"),
                 events: rest.setArrayId(contact.events, "id"),
                 phones: rest.setArrayObject(contact.phones),
@@ -171,7 +171,7 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', '$moment', 'secure', function 
 
         var donationToSave = {
             donation: {
-                date: "2011-06-05 12:15:00",//donation.date,
+                date: $moment(donation.date).format('YYYY-MM-DD HH:mm:ss'),
                 amount: donation.amount,
                 currency: donation.currency,
                 type: donation.type,
@@ -247,7 +247,7 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', '$moment', 'secure', function 
 
         var donationToSave = {
             donation: {
-                date: "2011-06-05 12:15:00",//donation.date,
+                date: $moment(donation.date).format('YYYY-MM-DD HH:mm:ss'),
                 amount: donation.amount,
                 currency: donation.currency,
                 type: donation.type,
@@ -270,7 +270,7 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', '$moment', 'secure', function 
 
         var donationToSave = {
             donation: {
-                date: "2011-06-05 12:15:00",//donation.date,
+                date: $moment(donation.date).format('YYYY-MM-DD HH:mm:ss'),
                 amount: donation.amount,
                 currency: donation.currency,
                 type: donation.type,
@@ -292,7 +292,7 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', '$moment', 'secure', function 
 
         var donationToSave = {
             donation: {
-                date: "2011-06-05 12:15:00",//donation.date,
+                date: $moment(donation.date).format('YYYY-MM-DD HH:mm:ss'),
                 amount: donation.amount,
                 currency: donation.currency,
                 type: donation.type,
@@ -315,8 +315,8 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', '$moment', 'secure', function 
         var eventToSave = {
             event: {
                 title: event.title,
-                start: "2011-06-05 12:15:00", //event.start,
-                end: "2011-06-05 12:15:00" //event.end
+                start: $moment(event.start).format('YYYY-MM-DD HH:mm:ss'),
+                end: $moment(event.end).format('YYYY-MM-DD HH:mm:ss'),
             }
         };
 

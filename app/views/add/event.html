@@ -16,13 +16,13 @@
     <section class="data edit">
         <div class="key"><h3>Début</h3></div>
         <div class="values">
-            <input type="text" ng-model="eventToCreate.start" autocomplete="off"/>
+            <div sb-date-select ng-model="eventToCreate.start"></div>
         </div>
     </section>
     <section class="data edit">
         <div class="key"><h3>Fin</h3></div>
         <div class="values">
-            <input type="text" ng-model="eventToCreate.end" autocomplete="off"/>
+            <div sb-date-select ng-model="eventToCreate.end"></div>
         </div>
     </section>
 </article>
