@@ -6,6 +6,7 @@ var iahmDBApp = angular.module('iahmDBApp', [
     'angular-momentjs',
     'angularMoment',
     'sbDateSelect',
+    'ngTagsInput',
     'internationalPhoneNumber',
     'LocalStorageModule',
     'iahmDBApp.showView',

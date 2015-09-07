@@ -9,7 +9,7 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
         });
     }])
 
-    .controller('showCtrl', ['$scope', '$http', '$routeParams', '$location', 'rest', '$moment', function ($scope, $http, $routeParams, $location, rest, $moment) {
+    .controller('showCtrl', ['$scope', '$http', '$routeParams', '$location', 'rest', 'language', '$moment', function ($scope, $http, $routeParams, $location, rest, language, $moment) {
 
         if (typeof($routeParams.doc_type) === 'undefined' ||
             typeof($routeParams.id) === 'undefined') {
@@ -21,8 +21,9 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
             $scope.doc_id = $routeParams.id;
         }
 
-
         $scope.doc = {};
+
+        $scope.code_langues = language.getAll();
 
         $scope.cancelItem = function (doc, section) {
             $scope[section] = false;
@@ -95,6 +96,32 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
 
         });
 
+        $scope.addToResults = function (type, data) {
+
+            if (type == "language") {
+
+                var inLanguages = false;
+
+                angular.forEach($scope.contact.languages, function (language, key) {
+
+                    if (language.ref == data.id) {
+                        inLanguages = true;
+                    }
+
+                });
+
+                if (!inLanguages) {
+
+                    var language = {
+                        ref: data.id
+                    };
+
+                    $scope.contact.languages.push(language);
+                }
+            }
+
+        };
+
         $scope.$on('EntityReceived', function (event, data) {
             $scope.doc = data;
             $scope.entity = $scope.doc;
@@ -106,7 +133,6 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
             rest.Contact.getContact($scope.contact.id);
 
         });
-
 
 
     }])
@@ -182,4 +208,27 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
 
             return (country + " (" + city + ") " + number).trim();
         };
-    });
+    })
+
+    .filter('language', ['language', function (language) {
+        return function (val) {
+            if (!val) {
+                return '';
+            }
+
+            var return_val = "";
+
+            var languages = language.getAll();
+
+            angular.forEach(languages, function (language, key) {
+
+                if (language.id == val) {
+                    return_val = language.fr_name;
+                }
+
+            });
+
+            return return_val;
+
+        };
+    }]);

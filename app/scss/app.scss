@@ -404,6 +404,10 @@ section.data {
         width: 60%;
         padding: 0;
         margin: 0;
+
+        span {
+            padding-right: 5px;
+        }
     }
 
     &.edit {

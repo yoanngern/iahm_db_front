@@ -85,7 +85,7 @@
             <div class="values">
                 <div class="value">
 
-                    <span ng-repeat="language in contact.languages">{{language.name}}</span>
+                    <span ng-repeat="language in contact.languages">{{language.ref |language}}</span>
 
                 </div>
             </div>
@@ -130,20 +130,21 @@
 
                 <div class="tags" data-type="language">
                     <div class="results">
+
                         <span ng-click="removeToResults('language', language)"
-                              ng-repeat="language in contact.languages">{{language.name}}</span>
+                              ng-repeat="language in contact.languages">{{language.ref |language}}</span>
 
                         <input type="text" ng-model="searchLanguage"/>
 
                     </div>
-                    <!--
+
                     <ul class="found">
                         <li ng-click="addToResults('language', language)"
-                            ng-repeat="language in code_langues | searchFor:searchLanguage">
-                            <span>{{language.fr_name}}</span>
+                            ng-repeat="language in code_langues | filter:searchLanguage">
+                            <span>{{language.id |language}}</span>
                         </li>
                     </ul>
-                    -->
+
                 </div>
 
             </div>
