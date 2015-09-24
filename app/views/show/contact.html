@@ -69,7 +69,8 @@
             <div class="key"><h3>Date de naissance</h3></div>
             <div class="values">
 
-                <div class="value">{{contact.date_of_birth | amDateFormat:'Do MMMM YYYY'}} ({{contact.date_of_birth | ageFilter}}
+                <div class="value" ng-show="contact.date_of_birth">{{contact.date_of_birth | amDateFormat:'Do MMMM
+                    YYYY'}} ({{contact.date_of_birth | ageFilter}}
                     ans)
                 </div>
             </div>
@@ -312,23 +313,86 @@
 
 <script type="text/ng-template" id="locations.tpl.html">
 
-    <article ng-repeat="personType in contact.entities" class="doc-show">
+    <article ng-show="!editLocation" ng-repeat="personType in contact.entities" class="doc-show">
         <header>
             <h2>{{personType.entity.name}}</h2>
             <ul class="action">
+                <li ng-click="editItem('editLocation')">Modifier</li>
             </ul>
         </header>
-        <section  class="data" ng-repeat="location in personType.entity.locations">
+        <section class="data" ng-repeat="location in personType.entity.locations">
             <div class="key"><h3>{{location.type}}</h3></div>
             <div class="values">
                 <div class="value">{{location.address}}</div>
                 <div class="value">{{location.postbox}}</div>
                 <div class="value">{{location.district}}</div>
                 <div class="value">{{location.department}}</div>
-                <div class="value">{{location.postal_code}} {{location.city}}</div>
+                <div class="value">{{location.postalCode}} {{location.city}}</div>
                 <div class="value">{{location.country}}</div>
             </div>
         </section>
+    </article>
+
+    <article ng-show="editLocation" ng-repeat="personType in contact.entities" class="doc-edit">
+        <header>
+            <h2>{{personType.entity.name}}</h2>
+            <ul class="action">
+                <li ng-click="saveItem('contact', 'editLocation')">Sauvegarder</li>
+                <li ng-click="cancelItem('contact', 'editLocation')">Annuler</li>
+            </ul>
+        </header>
+
+        <div ng-repeat="location in personType.entity.locations">
+
+            <section class="data edit">
+                <div class="key"><h3>Type *</h3></div>
+                <div class="values">
+                    <input type="text" ng-model="location.type" autocomplete="off"/>
+                </div>
+            </section>
+            <section class="data edit">
+                <div class="key"><h3>Rue *</h3></div>
+                <div class="values">
+                    <input type="text" ng-model="location.address" autocomplete="off"/>
+                </div>
+            </section>
+            <section class="data edit">
+                <div class="key"><h3>Boîte postale</h3></div>
+                <div class="values">
+                    <input type="text" ng-model="location.postbox" autocomplete="off"/>
+                </div>
+            </section>
+            <section class="data edit">
+                <div class="key"><h3>District</h3></div>
+                <div class="values">
+                    <input type="text" ng-model="location.district" autocomplete="off"/>
+                </div>
+            </section>
+            <section class="data edit">
+                <div class="key"><h3>Département</h3></div>
+                <div class="values">
+                    <input type="text" ng-model="location.department" autocomplete="off"/>
+                </div>
+            </section>
+            <section class="data edit">
+                <div class="key"><h3>Code Postale</h3></div>
+                <div class="values">
+                    <input type="text" ng-model="location.postalCode" autocomplete="off"/>
+                </div>
+            </section>
+            <section class="data edit">
+                <div class="key"><h3>Ville *</h3></div>
+                <div class="values">
+                    <input type="text" ng-model="location.city" autocomplete="off"/>
+                </div>
+            </section>
+            <section class="data edit">
+                <div class="key"><h3>Pays *</h3></div>
+                <div class="values">
+                    <input type="text" ng-model="location.country" autocomplete="off"/>
+                </div>
+            </section>
+        </div>
     </article>
 
 </script>
@@ -345,19 +409,19 @@
         <table>
             <thead>
             <tr>
+                <th>Date</th>
                 <th>Montant</th>
                 <th>Monnaie</th>
                 <th>Type</th>
-                <th>Date</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="donation in donations">
+                <td>{{donation.date | date:'dd.MM.yyyy'}}</td>
                 <td>{{donation.amount}}</td>
                 <td>{{donation.currency}}</td>
                 <td>{{donation.type}}</td>
-                <td>{{donation.date | date:'dd MMMM yyyy'}}</td>
                 <td></td>
             </tr>
             </tbody>

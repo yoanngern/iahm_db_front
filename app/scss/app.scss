@@ -13,6 +13,11 @@ html, body {
     cursor: pointer;
 }
 
+a {
+    color: $gray4;
+    text-decoration: underline;
+}
+
 input {
     background-color: $white;
     border: 1px solid $gray2;
@@ -116,7 +121,6 @@ header#header_bar {
     display: inline-block;
     vertical-align: top;
     box-shadow: 0px -10px 21px 6px rgba(0, 0, 0, 0.30);
-
 
     #logo_simple {
         margin: 10px 10px 0 10px;
@@ -332,7 +336,6 @@ section#body {
                     border-bottom: none;
                     padding: 0 10px;
 
-
                     &.active {
                         border-bottom: none;
                     }
@@ -435,7 +438,6 @@ section.data {
                     }
                 }
 
-
                 span {
                     background-color: $black;
                     @include border-radius(2px);
@@ -467,7 +469,6 @@ section.data {
                     border-left: 1px solid $gray2;
                     border-right: 1px solid $gray2;
                     line-height: 25px;
-
 
                     &:hover {
                         background-color: $black;
@@ -542,6 +543,45 @@ section.data {
     }
 }
 
+#docMain table {
+    width: 100%;
+    border: 1px solid $gray2;
+    max-height: 300px;
+
+    th, td {
+        padding-left: 5px;
+    }
+
+    thead {
+
+        tr {
+            background-color: $gray2;
+            color: $black;
+
+            th {
+                padding-bottom: 5px;
+                font-family: $font-semi-bold;
+                font-size: 0.8em;
+                line-height: 1em;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            &:nth-child(odd) {
+                background-color: $white;
+
+            }
+
+            line-height: 30px;
+            border-bottom: 1px solid $gray2;
+
+        }
+
+    }
+}
+
 #addView {
     position: fixed;
     top: 15%;
@@ -552,9 +592,8 @@ section.data {
     margin-left: -320px;
     z-index: 1000;
     padding: 20px 30px 40px 30px;
-    box-shadow: 1px 5px 10px 0px rgba(0,0,0,0.25);
+    box-shadow: 1px 5px 10px 0px rgba(0, 0, 0, 0.25);
     max-height: 70%;
-
 
     a.close {
         width: 28px;
@@ -585,13 +624,13 @@ section.data {
     }
 
     header {
-        
+
         #icon_type {
             display: inline-block;
             width: 30px;
             height: 30px;
         }
-        
+
         h1 {
             vertical-align: top;
             display: inline-block;
@@ -631,7 +670,6 @@ section.data {
     ul.results {
         margin: 20px 0;
 
-
         li {
             display: block;
             margin: 5px 0;
@@ -652,7 +690,7 @@ section.data {
                 width: 30px;
                 height: 30px;
             }
-            
+
             h1 {
                 display: inline-block;
                 vertical-align: top;
@@ -660,8 +698,6 @@ section.data {
             }
         }
     }
-
-
 
     a.block {
         width: 180px;
@@ -676,6 +712,6 @@ section.data {
         &:nth-of-type(3) {
             margin-right: 0;
         }
-        
+
     }
 }

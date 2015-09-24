@@ -176,7 +176,7 @@ angular.module('iahmDBApp.add', [])
 
             $scope.currentEntity = data;
 
-            $scope.addItem("choiceEntity");
+            $scope.addItem("entityAction");
 
         });
 
@@ -187,7 +187,7 @@ angular.module('iahmDBApp.add', [])
 
             $scope.currentContact = data;
 
-            $scope.addItem("choiceEntity");
+            $scope.addItem("contactAction");
         });
 
         $scope.$on('DonationCreated', function (event, data) {

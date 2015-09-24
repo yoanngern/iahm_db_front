@@ -126,13 +126,19 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', '$moment', 'secure', 'message'
             return false;
         }
 
+        if(typeof contact.date_of_birth !== "undefined") {
+            var dateOfBirth = $moment(contact.date_of_birth).format('YYYY-MM-DD');
+        } else {
+            var dateOfBirth = null;
+        }
+
         var contactToSave = {
             contact: {
                 firstname: contact.firstname,
                 lastname: contact.lastname,
                 title: contact.title,
                 gender: contact.gender,
-                dateOfBirth: $moment(contact.date_of_birth).format('YYYY-MM-DD'),
+                dateOfBirth: dateOfBirth,
                 languages: rest.setArrayId(contact.languages, "ref"),
                 events: rest.setArrayId(contact.events, "id"),
                 phones: rest.setArrayObject(contact.phones),
@@ -340,6 +346,28 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', '$moment', 'secure', 'message'
 
         rest.postRest('groups', groupToSave, "GroupCreated");
 
+    };
+
+    rest.Location.putLocation = function (location) {
+
+        if (location == null) {
+            return false;
+        }
+
+        var locationToSave = {
+            location: {
+                type: location.type,
+                address: location.address,
+                postbox: location.postbox,
+                district: location.district,
+                department: location.department,
+                postalCode: location.postalCode,
+                city: location.city,
+                country: location.country
+            }
+        };
+
+        rest.putRest('locations/' + location.id, locationToSave, "LocationUpdated");
     };
 
 

@@ -41,8 +41,23 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
 
             console.log("saveItem");
 
-            if (doc === "contact") {
+            if ((doc === "contact" && section === "editTitle") ||
+                (doc === "contact" && section === "editInfos") ||
+                (doc === "contact" && section === "editCoord") ||
+                (doc === "contact" && section === "editComm")) {
                 rest.Contact.putContact($scope.contact);
+            }
+
+            if (doc === "contact" && section === "editLocation") {
+
+                angular.forEach($scope.contact.entities, function (personType, key) {
+
+                    angular.forEach(personType.entity.locations, function (location, key) {
+
+                        rest.Location.putLocation(location);
+
+                    });
+                });
             }
 
             $scope[section] = false;
@@ -91,9 +106,15 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
         $scope.$on('ContactReceived', function (event, data) {
             $scope.doc = data;
 
-            $scope.doc.date_of_birth = $moment($scope.doc.date_of_birth);
+            if (typeof $scope.doc.date_of_birth !== "undefined") {
+                $scope.doc.date_of_birth = $moment($scope.doc.date_of_birth);
+            }
 
             $scope.contact = $scope.doc;
+
+            rest.Contact.getDonations($scope.contact.id);
+            rest.Contact.getEvents($scope.contact.id);
+            rest.Contact.getGroups($scope.contact.id);
 
         });
 
@@ -170,6 +191,20 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
             rest.Contact.getContact($scope.contact.id);
 
         });
+
+        $scope.$on('ContactDonationsReceived', function (event, data) {
+            $scope.donations = data.donations;
+        });
+
+        $scope.$on('ContactEventsReceived', function (event, data) {
+            $scope.events = data.events;
+        });
+
+        $scope.$on('ContactGroupsReceived', function (event, data) {
+            $scope.groups = data.groups;
+        });
+
+
 
 
     }])
