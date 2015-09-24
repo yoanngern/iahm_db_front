@@ -68,8 +68,6 @@ var iahmDBApp = angular.module('iahmDBApp', [
             secure.badAccessToken();
         };
 
-        $scope.message = "";
-
         $scope.searchValue = "";
 
         $scope.searchConstructor = {

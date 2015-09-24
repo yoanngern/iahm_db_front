@@ -1,4 +1,4 @@
-iahmDBApp.factory('rest', ['$http', '$rootScope', '$moment', 'secure', function ($http, $rootScope, $moment, secure) {
+iahmDBApp.factory('rest', ['$http', '$rootScope', '$moment', 'secure', 'message', function ($http, $rootScope, $moment, secure, message) {
 
 
     var rest = {};
@@ -415,6 +415,8 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', '$moment', 'secure', function 
 
     rest.putRest = function (rest_path, data, event) {
 
+        message.display("Data updating ...");
+
         var config = {
             dataType: "json",
             headers: {
@@ -434,8 +436,12 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', '$moment', 'secure', function 
 
                 $rootScope.$broadcast(event, data);
 
+                message.pop("Data saved");
+
             }).
             error(function (data, status, headers, config) {
+
+                message.pop("Error sending");
 
                 return false;
             });
@@ -443,6 +449,8 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', '$moment', 'secure', function 
     };
 
     rest.postRest = function (rest_path, data, event) {
+
+        message.display("Data sending ...");
 
         var config = {
             dataType: "json",
@@ -464,7 +472,11 @@ iahmDBApp.factory('rest', ['$http', '$rootScope', '$moment', 'secure', function 
 
                 rest.getURL('http://iahmdb.local' + location, event);
 
+                message.pop("Data sent");
+
             }, function (response) {
+
+                message.pop("Error sending");
 
                 return false;
 

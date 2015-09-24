@@ -9,7 +9,7 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
         });
     }])
 
-    .controller('showCtrl', ['$scope', '$http', '$routeParams', '$location', 'rest', 'language', '$moment', function ($scope, $http, $routeParams, $location, rest, language, $moment) {
+    .controller('showCtrl', ['$scope', '$http', '$routeParams', '$location', 'rest', 'language', '$moment', 'message', function ($scope, $http, $routeParams, $location, rest, language, $moment, message) {
 
         if (typeof($routeParams.doc_type) === 'undefined' ||
             typeof($routeParams.id) === 'undefined') {
@@ -20,6 +20,7 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
             $scope.doc_type = $routeParams.doc_type;
             $scope.doc_id = $routeParams.id;
         }
+
 
         $scope.doc = {};
 
@@ -96,6 +97,40 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
 
         });
 
+        $("html").on('click', "div.tags div.results", function () {
+            var elem = $(this)[0];
+
+            $("input", elem).focus();
+
+        }).on('focus', "div.tags div.results input", function () {
+
+            $("div.tags ul.found").show();
+
+        }).mouseup(function (e) {
+            var container = $("div.tags");
+
+            if (!container.is(e.target) // if the target of the click isn't the container...
+                && container.has(e.target).length === 0) // ... nor a descendant of the container
+            {
+                $("ul.found", container).hide();
+            }
+        });
+
+        $scope.removeToResults = function (type, data) {
+            if (type == "language") {
+
+                angular.forEach($scope.contact.languages, function (language, key) {
+
+                    if (language.ref == data.ref) {
+
+                        $scope.contact.languages.splice(key, 1);
+                    }
+
+                });
+
+            }
+        };
+
         $scope.addToResults = function (type, data) {
 
             if (type == "language") {
@@ -115,6 +150,8 @@ angular.module('iahmDBApp.showView', ['ngRoute'])
                     var language = {
                         ref: data.id
                     };
+
+                    $("div.tags div.results input").val("").focus();
 
                     $scope.contact.languages.push(language);
                 }

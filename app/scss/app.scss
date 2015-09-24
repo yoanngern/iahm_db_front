@@ -404,9 +404,85 @@ section.data {
         width: 60%;
         padding: 0;
         margin: 0;
+        position: relative;
 
         span {
-            padding-right: 5px;
+            margin-right: 5px;
+        }
+
+        .tags {
+            .results {
+                background-color: $white;
+                border: 1px solid $gray2;
+                padding: 5px 5px 0 5px;
+                overflow: auto;
+                display: block;
+                margin-bottom: 0px;
+                cursor: pointer;
+
+                &:active {
+                    outline: none;
+                    border: 1px solid $gray4;
+                }
+
+                input {
+                    background-color: transparent;
+                    border: none;
+                    width: 85%;
+
+                    &:focus {
+                        border: none;
+                    }
+                }
+
+
+                span {
+                    background-color: $black;
+                    @include border-radius(2px);
+                    background-image: url('../images/cross.svg');
+                    background-position: right center;
+                    background-repeat: no-repeat;
+                    color: $white;
+                    padding: 0 17px 2px 5px;
+                    display: inline-block;
+                    margin-bottom: 5px;
+
+                }
+            }
+
+            ul.found {
+                max-height: 200px;
+                overflow-x: hidden;
+                overflow-y: scroll;
+                background-color: $white;
+                box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.25);
+                position: absolute;
+                width: 100%;
+                z-index: 1000;
+
+                li {
+                    display: block;
+                    padding: 3px 10px 3px 10px;
+                    border-bottom: 1px solid $gray2;
+                    border-left: 1px solid $gray2;
+                    border-right: 1px solid $gray2;
+                    line-height: 25px;
+
+
+                    &:hover {
+                        background-color: $black;
+
+                        span {
+                            color: $white;
+                        }
+                    }
+
+                    span {
+                        color: $black;
+
+                    }
+                }
+            }
         }
     }
 
